@@ -1,0 +1,35 @@
+﻿@{
+    string count = ViewBag.Count;
+    int Level = (int)ViewBag.Level;
+    int _item = 0;
+}
+@model IEnumerable<codeTongCucThienTai.Models.DanhMucNhiemVu>
+@foreach (var item in Model)
+{
+    _item++;
+    <tr class="">
+        <td class="text-left">@count.@_item</td>
+        @if (Level == 1)
+        {
+            <td class="text-left text-bold">@item.danhMucNhiemVuName</td>
+        }
+        @if (Level == 2)
+        {
+            <td class="text-left">@item.danhMucNhiemVuName</td>
+        }
+        @if (Level == 3)
+        {
+            <td class="text-left" style="font-style:italic;">@item.danhMucNhiemVuName</td>
+        }
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="red text-right text-bold"></td>
+        <td class="red text-right text-bold"></td>
+        <td class="text-left"></td>
+        <td></td>
+    </tr>
+    @Html.Action("NhiemVuThuocChuyenMuc", "Home", new { Id = item.danhMucNhiemVuId, Count = count + "." + _item })
+    @Html.Action("DanhMucCon", "Home", new { Id = item.danhMucNhiemVuId, Count = count + "." + _item, Level = Level + 1 })
+}

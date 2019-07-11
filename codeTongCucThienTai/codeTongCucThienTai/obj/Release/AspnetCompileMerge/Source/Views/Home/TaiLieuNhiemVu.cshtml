@@ -1,0 +1,13 @@
+﻿@model List<codeTongCucThienTai.Models.TaiLieu>
+@if (Model != null && Model.Count > 0)
+{
+    <div class="">
+        <i class="fa fa-file-archive"></i>  Tài liệu đính kèm
+        @foreach (var item in Model)
+        {
+            <div id="item_@item.taiLieuId">
+                <a href="../KhoDuLieu/@item.taiLieuName">@item.taiLieuName</a>
+            </div>
+        }
+    </div>
+}

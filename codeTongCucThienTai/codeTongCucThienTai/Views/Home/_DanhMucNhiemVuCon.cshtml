@@ -1,0 +1,38 @@
+﻿@{
+    var _service = new TongCucThienTaiServices();
+}
+@using codeTongCucThienTai.Models;
+@model IEnumerable<codeTongCucThienTai.Models.DanhMucNhiemVu>
+@foreach (var item in Model)
+{
+    <tr>
+        @if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 1)
+        {
+            <td class="text-left">@item.danhMucNhiemVuName</td>
+        }
+        else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 2)
+        {
+            <td class="text-left">-@item.danhMucNhiemVuName</td>
+        }
+        else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 3)
+        {
+            <td class="text-left">--@item.danhMucNhiemVuName</td>
+        }
+        else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 4)
+        {
+            <td class="text-left">---@item.danhMucNhiemVuName</td>
+        }
+        else
+        {
+            <td class="text-left">@item.danhMucNhiemVuName</td>
+        }
+        <td>
+            @if (!_service.CheckUsingDanhMucNhiemVu(item.danhMucNhiemVuId))
+            {
+                <button type="button" onclick="updateDanhMucNhiemVu('@item.danhMucNhiemVuId')" class="btn btn-info btn-sm"><i class="fa fa-recycle"></i> Sửa</button>
+                <button type="button" onclick="deleteDanhMucNhiemVu('@item.danhMucNhiemVuId')" class="btn btn-info btn-sm"><i class="fa fa-trash"></i> Xóa</button>
+            }
+        </td>
+    </tr>
+    @Html.Action("_DanhMucNhiemVuCon", "Home", new { Id = item.danhMucNhiemVuId })
+}

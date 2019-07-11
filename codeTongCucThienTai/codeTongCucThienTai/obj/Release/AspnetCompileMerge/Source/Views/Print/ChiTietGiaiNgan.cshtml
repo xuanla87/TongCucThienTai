@@ -1,0 +1,42 @@
+﻿@{
+    int Count = 0;
+    decimal GiaTri = (decimal)ViewBag.GiaTri;
+    if (GiaTri == 0)
+    {
+        GiaTri = 1;
+    }
+}
+@model List<codeTongCucThienTai.Models.GiaiNgan>
+<div class="form tat-toan form-horizontal form-edit">
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12 mb-1">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th width="80">STT</th>
+                            <th>Thời gian</th>
+                            <th>Giá trị giải ngân</th>
+                            <th>Tỉ lệ</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            Count++;
+                            <tr>
+                                <td>@Count</td>
+                                <td>@item.thoiGianThanhToan.ToString("dd/MM/yyyy")</td>
+                                <td class="text-right red">@item.giaTriThanhToan.GetValueOrDefault().ToString("N0")</td>
+                                <td class="text-center success">@(((item.giaTriThanhToan.GetValueOrDefault()/GiaTri)*100).ToString("N2")) %</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <div class="text-left red">Không có dữ liệu giải ngân</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,457 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Kế hoạch nhiệm vụ";
+    int count = 0;
+}
+@model IEnumerable<codeTongCucThienTai.Models.DanhMucNhiemVu>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("KeHoachNhiemVu2","Home")">Nhiệm vụ</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-header-right col-md-6 col-12 button-page-list money2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("KeHoachNhiemVu2", "Home", FormMethod.Get, new { @id = "ke-hoach-nhiem-vu-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-5">
+                                                    <input type="text" id="SearchKey" autocomplete="off" name="SearchKey" class="form-control input-sm" value="@ViewBag.SearchKey" placeholder="Tên nhiệm vụ...">
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-2">
+                                                    @Html.DropDownList("DonViDeXuat", new SelectList(ViewBag.DonViDeXuat, "Value", "Text"), "-- Đơn vị đề xuất --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group mb-1 col-sm-12 col-md-3 date-npt mad-col">
+                                                    <div class="row">
+                                                        <div class="text-left col-md-8 pad-search mad-col button-search-1">
+                                                            <button type="button" onclick="Search()" class="btn btn-info">Tìm kiếm <i class="la la-search"></i></button>
+                                                            <a href="#" class="card-link blue darken-2 t-text " data-toggle="modal" data-target="#large">
+                                                                Nâng cao
+                                                            </a>
+                                                            <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-info white">
+                                                                            <h2 class="modal-title white">Tìm kiếm nâng cao</h2>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="email-addr">Tên nhiệm vụ</label>
+                                                                                    <br>
+                                                                                    <input type="text" autocomplete="off" id="SearchKeyNC" name="SearchKeyNC" class="form-control input-sm" value="@ViewBag.SearchKey">
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Nguồn vốn</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("NguonVon", new SelectList(ViewBag.NguonVon, "Value", "Text"), "-- Nguồn vốn --", new { @class = "form-control input-sm" })
+                                                                                </div>
+
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Đơn vị đề xuất</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("DonViDeXuatNC", new SelectList(ViewBag.DonViDeXuat, "Value", "Text"), "-- Đơn vị đề xuất --", new { @class = "form-control input-sm" })
+                                                                                </div>
+
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Đơn vị dự toán</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("DonViDuToan", new SelectList(ViewBag.DonViDuToan, "Value", "Text"), "-- Đơn vị dự toán --", new { @class = "form-control input-sm" })
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Năm kế hoạch</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("NamKeHoach", new SelectList(ViewBag.NamKeHoach, "Value", "Text"), "-- Năm kế hoạch --", new { @class = "form-control input-sm" })
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" onclick="SearchNC()" class="btn btn-info">Tìm kiếm</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group none mb-1 col-sm-6 col-md-2 text-right left-search search-p">
+                                                    <span class=" print-dsnpt ">
+                                                        <button type="button" onclick="Print()" class="btn btn-info" title="In dánh sách"><i class="la la-print"></i></button>
+                                                        <button type="button" onclick="ExportExcel()" class="btn btn-info" title="Xuất Excel danh sách"><i class="la la-download"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table id="KehoachNhiemVu" class="table table1 table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center"><input id="cbSTT" name="cbSTT" checked type="checkbox" /><br />STT</th>
+                                                    <th class="text-center w-350"><input id="cbName" name="cbName" checked type="checkbox" /><br />Tên nhiệm vụ</th>
+                                                    <th class="text-center w-220">
+                                                        <input id="cbNguonVon" name="cbNguonVon" checked type="checkbox" /><br /> Nguồn vốn
+                                                    </th>
+                                                    <th class="text-center"><input id="cbDVDeXuat" checked name="cbDVDeXuat" type="checkbox" /><br />Đơn vị đề xuất</th>
+                                                    <th class="text-center"><input id="cbDVDeDuToan" checked name="cbDVDeDuToan" type="checkbox" /><br />Đơn vị dự toán</th>
+                                                    <th class="w-stt text-center"><input id="cbNamKeHoach" checked name="cbNamKeHoach" type="checkbox" /><br />Năm kế hoạch</th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriDeXuat" checked name="cbGiaTriDeXuat" type="checkbox" /><br />Giá trị đề xuất của đơn vị <br />
+                                                        <div class="text-right red">@Html.Raw(ViewBag.TotalDeXuat)</div>
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriDeXuat2" checked name="cbGiaTriDeXuat2" type="checkbox" /><br />Giá trị đề xuất của tổng cục <br />
+                                                        <div class="text-right red">@Html.Raw(ViewBag.TotalDeXuat2)</div>
+                                                    </th>
+                                                    <th class="text-center w-220">
+                                                        <input id="cbGhiChu" name="cbGhiChu" checked type="checkbox" /><br />Ghi chú
+                                                    </th>
+                                                    <th class="w-220">Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    count++;
+                                                    <tr class="">
+                                                        <td class="text-bold text-left">@count</td>
+                                                        <td class="text-left text-uppercase text-bold">@item.danhMucNhiemVuName</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="red text-right text-bold"></td>
+                                                        <td class="red text-right text-bold"></td>
+                                                        <td class="text-left"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    @Html.Action("NhiemVuThuocChuyenMuc", "Home", new { Id = item.danhMucNhiemVuId , Count = count.ToString() })
+                                                    @Html.Action("DanhMucCon", "Home", new { Id = item.danhMucNhiemVuId, Count = count.ToString(), Level = 1 })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            <!--3-->
+                            <div class="col-sm-12">
+                                <div class="row bg-form-table">
+                                    <!--lua-chon-->
+                                    <div class="col-sm-12 button-list">
+                                        <div class="row">
+                                            <div class="col-md-5 text-left">
+                                                <!--them-moi-->
+                                                <button type="button" class="btn btn-danger btn-w-m mb-1 btn-sm" onclick="AddNhiemVu()">
+                                                    <i class="fa fa-plus"></i> Thêm mới
+                                                </button>
+                                                <a href="@Url.Action("ImportData","Print")" class="btn btn-danger btn-w-m mb-1 btn-sm"><i class="fa fa-file-excel-o"></i> Import từ FileExcel</a>
+                                                <!-- Modal -->
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Thêm mới nhiệm vụ</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" id="modalBodyNhiemVu">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalUpdateNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Cập nhập nhiệm vụ</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" id="modalBodyUpdateNhiemVu">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalDuyetNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Duyệt kế hoạch nhiệm vụ</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body" id="modalBodyDuyet">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalXemNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Thông tin nhiệm vụ</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body" id="modalBodyXem">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalAddData" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Thêm kho dữ liệu</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @using (Ajax.BeginForm("ThemMoiDuLieu", "Home", null, new AjaxOptions
+                                                                {
+                                                                    HttpMethod = "POST",
+                                                                    OnSuccess = "SuccessMessage",
+                                                                    OnFailure = "FailMessage",
+                                                                    UpdateTargetId = "resultTarget"
+                                                                }, new { enctype = "multipart/form-data" }))
+                                                                {
+                                                                    @Html.AntiForgeryToken()
+                                                                    <div class="form tat-toan form-horizontal form-edit">
+                                                                        <div class="form-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-md-3 label-control">Chọn tệp</label>
+                                                                                        <div class="col-md-9">
+                                                                                            @Html.TextBox("fileAttach", "", new { @type = "file" })
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-md-12 text-right">
+                                                                                            <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End-lua-chon-->
+                                    </div>
+                                    <!--End-3-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<iframe id="txtArea1" style="display:none"></iframe>
+@section scripts {
+    <script>
+        //$(document).ready(function () {
+        //    $('#KehoachNhiemVu').DataTable();
+        //});
+        function ShowAddData() {
+            $("#modalAddData").modal("show");
+        }
+        function SuccessMessage() {
+            var _erro = $('#success').val();
+            if (_erro.length > 0)
+                displayMessage($('#success').val(), 'success');
+            else
+                displayMessage($('#error').val(), 'error');
+            $("#modalAddData").modal("hide");
+        }
+        function SearchNC() {
+            $("#SearchKey").val($("#SearchKeyNC").val());
+            $("#DonViDeXuat").val($("#DonViDeXuatNC").val());
+            $("#ke-hoach-nhiem-vu-list").submit();
+        }
+        function Search() {
+            $("#SearchKeyNC").val($("#SearchKey").val());
+            $("#DonViDeXuatNC").val($("#DonViDeXuat").val());
+            $("#ke-hoach-nhiem-vu-list").submit();
+        }
+        function AddNhiemVu() {
+            $("#modalBodyNhiemVu").load("@Url.Action("ThemMoiNhiemVu", "Home")");
+            setTimeout(function () {
+                $("#modalNhiemVu").modal("show");
+            }, 500)
+        }
+        function suaNhiemVu(x) {
+            $("#modalBodyUpdateNhiemVu").load("/Home/CapNhapNhiemVu/" + x);
+            setTimeout(function () {
+                $("#modalUpdateNhiemVu").modal("show");
+            }, 500)
+        }
+        function xemNhiemVu(x) {
+            $("#modalBodyXem").load("/Home/ChiTietNhiemVu/" + x);
+            setTimeout(function () {
+                $("#modalXemNhiemVu").modal("show");
+            }, 500)
+        }
+        function duyetNhiemVu(x) {
+            $("#modalBodyDuyet").load("/Home/DuyetNhiemVu/" + x);
+            setTimeout(function () {
+                $("#modalDuyetNhiemVu").modal("show");
+            }, 500)
+        }
+
+        function xoaNhiemVu(x) {
+            var result = confirm("Bạn có chắc chắn muốn xóa không?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/XoaNhiemVu",
+                    data: { Id: x },
+                    datatype: "json",
+                    success: function (data) {
+                        if (data)
+                            displayMessage($('#success').val(), 'success');
+                        else
+                            displayMessage($('#error').val(), 'error');
+                        document.location.reload(true);
+                    }
+                });
+            }
+        }
+        function Print() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var DVDuToan = $('input[name="cbDVDeDuToan"]:checked').length > 0;
+            var NamKeHoach = $('input[name="cbNamKeHoach"]:checked').length > 0;
+            var GiaTriDeXuat = $('input[name="cbGiaTriDeXuat"]:checked').length > 0;
+            var GiaTriDeXuat2 = $('input[name="cbGiaTriDeXuat2"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute", "top": "-1000000px" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html><head><title>Tổng cục thiên tai</title>');
+            frameDoc.document.write('</head><body>');
+            $.ajax({
+                type: "GET",
+                url: "/Print/PrintKeHoach",
+                data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _DonViDuToan: DVDuToan, _NamKeHoach: NamKeHoach, _GiaTriDeXuat: GiaTriDeXuat, _GiaTriDeXuat2: GiaTriDeXuat2, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                datatype: "json",
+                success: function (data) {
+                    frameDoc.document.write(data);
+                }
+            });
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+        }
+
+        function ExportExcel() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var DVDuToan = $('input[name="cbDVDeDuToan"]:checked').length > 0;
+            var NamKeHoach = $('input[name="cbNamKeHoach"]:checked').length > 0;
+            var GiaTriDeXuat = $('input[name="cbGiaTriDeXuat"]:checked').length > 0;
+            var GiaTriDeXuat2 = $('input[name="cbGiaTriDeXuat2"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                txtArea1.document.open("txt/html", "replace");
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintKeHoach",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _DonViDuToan: DVDuToan, _NamKeHoach: NamKeHoach, _GiaTriDeXuat: GiaTriDeXuat, _GiaTriDeXuat2: GiaTriDeXuat2, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        txtArea1.document.write(data);
+                    }
+                });
+                txtArea1.document.close();
+                txtArea1.focus();
+                sa = txtArea1.document.execCommand("SaveAs", true, "DanhSachKeHoach.xls");
+                return (sa);
+            }
+            else {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintKeHoach",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _DonViDuToan: DVDuToan, _NamKeHoach: NamKeHoach, _GiaTriDeXuat: GiaTriDeXuat, _GiaTriDeXuat2: GiaTriDeXuat2, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        var downloadLink;
+                        var dataType = 'application/vnd.ms-excel';
+                        var filename = "DanhSachKeHoach.xls";
+                        downloadLink = document.createElement("a");
+                        document.body.appendChild(downloadLink);
+                        downloadLink.href = 'data:' + dataType + ', ' + encodeURIComponent(data);
+                        downloadLink.download = filename;
+                        downloadLink.click();
+                    }
+                });
+            }
+        }
+    </script>
+}

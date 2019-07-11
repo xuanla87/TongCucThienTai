@@ -1,0 +1,40 @@
+﻿@model codeTongCucThienTai.Models.DanhMucNhiemVu
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.isTrash)
+    <div class="form tat-toan form-horizontal form-edit">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-md-3 label-control">Tên danh mục</label>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(x => x.danhMucNhiemVuName, new { @class = "form-control input-sm", @placeholder = "Nhập tên.." })
+                            @Html.ValidationMessageFor(x => x.danhMucNhiemVuName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 label-control">Danh mục cha</label>
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(x => x.danhMucCha, null, "---Chọn danh mục---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.danhMucCha, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 label-control">Cấp danh mục</label>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(x => x.capDanhMuc, new { @class = "form-control input-sm number", @placeholder = "Nhập số.." })
+                            @Html.ValidationMessageFor(x => x.capDanhMuc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TongCucThienTaiModelStoreContainer" CdmEntityContainer="TongCucThienTaiEntities">
+    <EntitySetMapping Name="DanhMucDonVis">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.DanhMucDonVi">
+        <MappingFragment StoreEntitySet="DanhMucDonVi">
+          <ScalarProperty Name="danhMucDonViId" ColumnName="danhMucDonViId" />
+          <ScalarProperty Name="danhMucDonViName" ColumnName="danhMucDonViName" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DanhMucNguonVons">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.DanhMucNguonVon">
+        <MappingFragment StoreEntitySet="DanhMucNguonVon">
+          <ScalarProperty Name="capDanhMuc" ColumnName="capDanhMuc" />
+          <ScalarProperty Name="danhMucCha" ColumnName="danhMucCha" />
+          <ScalarProperty Name="danhMucNguonVonId" ColumnName="danhMucNguonVonId" />
+          <ScalarProperty Name="danhMucNguonVonName" ColumnName="danhMucNguonVonName" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DanhMucNhiemVus">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.DanhMucNhiemVu">
+        <MappingFragment StoreEntitySet="DanhMucNhiemVu">
+          <ScalarProperty Name="capDanhMuc" ColumnName="capDanhMuc" />
+          <ScalarProperty Name="danhMucCha" ColumnName="danhMucCha" />
+          <ScalarProperty Name="danhMucNhiemVuId" ColumnName="danhMucNhiemVuId" />
+          <ScalarProperty Name="danhMucNhiemVuName" ColumnName="danhMucNhiemVuName" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GiaiNgans">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.GiaiNgan">
+        <MappingFragment StoreEntitySet="GiaiNgan">
+          <ScalarProperty Name="giaiNganId" ColumnName="giaiNganId" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+          <ScalarProperty Name="nhiemVuName" ColumnName="nhiemVuName" />
+          <ScalarProperty Name="giaTriThanhToan" ColumnName="giaTriThanhToan" />
+          <ScalarProperty Name="thoiGianThanhToan" ColumnName="thoiGianThanhToan" />
+          <ScalarProperty Name="tiLeGiaiNgan" ColumnName="tiLeGiaiNgan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogTrangThais">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.LogTrangThai">
+        <MappingFragment StoreEntitySet="LogTrangThai">
+          <ScalarProperty Name="logTrangThaiId" ColumnName="logTrangThaiId" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+          <ScalarProperty Name="nhiemVuName" ColumnName="nhiemVuName" />
+          <ScalarProperty Name="userUpdate" ColumnName="userUpdate" />
+          <ScalarProperty Name="trangThaiTruoc" ColumnName="trangThaiTruoc" />
+          <ScalarProperty Name="trangThaiSau" ColumnName="trangThaiSau" />
+          <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NguonVonNhiemVus">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.NguonVonNhiemVu">
+        <MappingFragment StoreEntitySet="NguonVonNhiemVu">
+          <ScalarProperty Name="nguonVonNhiemVuId" ColumnName="nguonVonNhiemVuId" />
+          <ScalarProperty Name="nguonVonId" ColumnName="nguonVonId" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhiemVus">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.NhiemVu">
+        <MappingFragment StoreEntitySet="NhiemVu">
+          <ScalarProperty Name="hanTrinh" ColumnName="hanTrinh" />
+          <ScalarProperty Name="giaTriDeXuat2" ColumnName="giaTriDeXuat2" />
+          <ScalarProperty Name="giaTriThanhToan" ColumnName="giaTriThanhToan" />
+          <ScalarProperty Name="giaTriHopDong" ColumnName="giaTriHopDong" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+          <ScalarProperty Name="nhiemVuName" ColumnName="nhiemVuName" />
+          <ScalarProperty Name="danhMucId" ColumnName="danhMucId" />
+          <ScalarProperty Name="namKeHoach" ColumnName="namKeHoach" />
+          <ScalarProperty Name="giaTriDeXuat" ColumnName="giaTriDeXuat" />
+          <ScalarProperty Name="giaTriGiao" ColumnName="giaTriGiao" />
+          <ScalarProperty Name="donViDeXuatId" ColumnName="donViDeXuatId" />
+          <ScalarProperty Name="donViDeXuatName" ColumnName="donViDeXuatName" />
+          <ScalarProperty Name="donViDuToanId" ColumnName="donViDuToanId" />
+          <ScalarProperty Name="donViDutoanName" ColumnName="donViDutoanName" />
+          <ScalarProperty Name="nguonVonName" ColumnName="nguonVonName" />
+          <ScalarProperty Name="ghiChu" ColumnName="ghiChu" />
+          <ScalarProperty Name="createTime" ColumnName="createTime" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+          <ScalarProperty Name="trangThai" ColumnName="trangThai" />
+          <ScalarProperty Name="giaTriDuyet" ColumnName="giaTriDuyet" />
+          <ScalarProperty Name="giaTriTrungThau" ColumnName="giaTriTrungThau" />
+          <ScalarProperty Name="nhaThauTrung" ColumnName="nhaThauTrung" />
+          <ScalarProperty Name="giaTriQuyetToan" ColumnName="giaTriQuyetToan" />
+          <ScalarProperty Name="userCreate" ColumnName="userCreate" />
+          <ScalarProperty Name="userUpdate" ColumnName="userUpdate" />
+          <ScalarProperty Name="updateTime" ColumnName="updateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhiemVuTaiLieux">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.NhiemVuTaiLieu">
+        <MappingFragment StoreEntitySet="NhiemVuTaiLieu">
+          <ScalarProperty Name="nhiemVuTaiLieuId" ColumnName="nhiemVuTaiLieuId" />
+          <ScalarProperty Name="taiLieuId" ColumnName="taiLieuId" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SanPhams">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.SanPham">
+        <MappingFragment StoreEntitySet="SanPham">
+          <ScalarProperty Name="sanPhamId" ColumnName="sanPhamId" />
+          <ScalarProperty Name="sanPhamName" ColumnName="sanPhamName" />
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+          <ScalarProperty Name="nhiemVuName" ColumnName="nhiemVuName" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaiLieux">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.TaiLieu">
+        <MappingFragment StoreEntitySet="TaiLieu">
+          <ScalarProperty Name="taiLieuId" ColumnName="taiLieuId" />
+          <ScalarProperty Name="taiLieuName" ColumnName="taiLieuName" />
+          <ScalarProperty Name="taiLieuLink" ColumnName="taiLieuLink" />
+          <ScalarProperty Name="isTrash" ColumnName="isTrash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoiThaus">
+      <EntityTypeMapping TypeName="TongCucThienTaiModel.GoiThau">
+        <MappingFragment StoreEntitySet="GoiThau">
+          <ScalarProperty Name="nhiemVuId" ColumnName="nhiemVuId" />
+          <ScalarProperty Name="giaThau" ColumnName="giaThau" />
+          <ScalarProperty Name="nhaThauName" ColumnName="nhaThauName" />
+          <ScalarProperty Name="goiThauId" ColumnName="goiThauId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

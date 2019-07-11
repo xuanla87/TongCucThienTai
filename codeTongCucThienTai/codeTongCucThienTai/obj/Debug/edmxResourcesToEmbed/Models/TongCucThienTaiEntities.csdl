@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TongCucThienTaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DanhMucDonVi">
+    <Key>
+      <PropertyRef Name="danhMucDonViId" />
+    </Key>
+    <Property Name="danhMucDonViId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="danhMucDonViName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DanhMucNguonVon">
+    <Key>
+      <PropertyRef Name="danhMucNguonVonId" />
+    </Key>
+    <Property Name="danhMucNguonVonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="danhMucNguonVonName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+    <Property Name="danhMucCha" Type="Int32" />
+    <Property Name="capDanhMuc" Type="Int32" />
+  </EntityType>
+  <EntityType Name="DanhMucNhiemVu">
+    <Key>
+      <PropertyRef Name="danhMucNhiemVuId" />
+    </Key>
+    <Property Name="danhMucNhiemVuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="danhMucNhiemVuName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+    <Property Name="danhMucCha" Type="Int32" />
+    <Property Name="capDanhMuc" Type="Int32" />
+  </EntityType>
+  <EntityType Name="GiaiNgan">
+    <Key>
+      <PropertyRef Name="giaiNganId" />
+    </Key>
+    <Property Name="giaiNganId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+    <Property Name="nhiemVuName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="giaTriThanhToan" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="thoiGianThanhToan" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="tiLeGiaiNgan" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogTrangThai">
+    <Key>
+      <PropertyRef Name="logTrangThaiId" />
+    </Key>
+    <Property Name="logTrangThaiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+    <Property Name="nhiemVuName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="userUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="trangThaiTruoc" Type="Int32" Nullable="false" />
+    <Property Name="trangThaiSau" Type="Int32" Nullable="false" />
+    <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="NguonVonNhiemVu">
+    <Key>
+      <PropertyRef Name="nguonVonNhiemVuId" />
+    </Key>
+    <Property Name="nguonVonNhiemVuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nguonVonId" Type="Int32" Nullable="false" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NhiemVu">
+    <Key>
+      <PropertyRef Name="nhiemVuId" />
+    </Key>
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nhiemVuName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="danhMucId" Type="Int32" Nullable="false" />
+    <Property Name="namKeHoach" Type="Int32" Nullable="false" />
+    <Property Name="giaTriDeXuat" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="giaTriGiao" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="donViDeXuatId" Type="Int32" Nullable="false" />
+    <Property Name="donViDeXuatName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="donViDuToanId" Type="Int32" Nullable="false" />
+    <Property Name="donViDutoanName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="nguonVonName" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="ghiChu" Type="String" MaxLength="1550" FixedLength="false" Unicode="true" />
+    <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+    <Property Name="trangThai" Type="Int32" Nullable="false" />
+    <Property Name="giaTriDuyet" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="giaTriTrungThau" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="nhaThauTrung" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="giaTriQuyetToan" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="userCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="userUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="updateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="giaTriHopDong" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="giaTriThanhToan" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="giaTriDeXuat2" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="hanTrinh" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="NhiemVuTaiLieu">
+    <Key>
+      <PropertyRef Name="nhiemVuTaiLieuId" />
+    </Key>
+    <Property Name="nhiemVuTaiLieuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="taiLieuId" Type="Int32" Nullable="false" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="sanPhamId" />
+    </Key>
+    <Property Name="sanPhamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sanPhamName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+    <Property Name="nhiemVuName" Type="String" MaxLength="550" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TaiLieu">
+    <Key>
+      <PropertyRef Name="taiLieuId" />
+    </Key>
+    <Property Name="taiLieuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="taiLieuName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="taiLieuLink" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isTrash" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="TongCucThienTaiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DanhMucDonVis" EntityType="Self.DanhMucDonVi" />
+    <EntitySet Name="DanhMucNguonVons" EntityType="Self.DanhMucNguonVon" />
+    <EntitySet Name="DanhMucNhiemVus" EntityType="Self.DanhMucNhiemVu" />
+    <EntitySet Name="GiaiNgans" EntityType="Self.GiaiNgan" />
+    <EntitySet Name="LogTrangThais" EntityType="Self.LogTrangThai" />
+    <EntitySet Name="NguonVonNhiemVus" EntityType="Self.NguonVonNhiemVu" />
+    <EntitySet Name="NhiemVus" EntityType="Self.NhiemVu" />
+    <EntitySet Name="NhiemVuTaiLieux" EntityType="Self.NhiemVuTaiLieu" />
+    <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+    <EntitySet Name="TaiLieux" EntityType="Self.TaiLieu" />
+    <EntitySet Name="GoiThaus" EntityType="TongCucThienTaiModel.GoiThau" />
+  </EntityContainer>
+  <EntityType Name="GoiThau">
+    <Key>
+      <PropertyRef Name="goiThauId" />
+    </Key>
+    <Property Name="goiThauId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nhaThauName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="giaThau" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="nhiemVuId" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>

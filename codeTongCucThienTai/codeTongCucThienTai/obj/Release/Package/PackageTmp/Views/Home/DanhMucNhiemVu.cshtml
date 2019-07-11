@@ -1,0 +1,158 @@
+﻿@using codeTongCucThienTai.Models;
+@{
+    ViewBag.Title = "Quản lý danh mục nhiệm vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+    var _service = new TongCucThienTaiServices();
+}
+@model IEnumerable<codeTongCucThienTai.Models.DanhMucNhiemVu>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("DanhMucNhiemVu","Home")">Danh mục nhiệm vụ</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("DanhMucNhiemVu", "Home", FormMethod.Get, new { @id = "danh-muc-nhiem-vu-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-4">
+                                                    <input type="text" id="SearchKey" name="SearchKey" value="@ViewBag.SearchKey" class="form-control input-sm" placeholder="Từ khóa...">
+                                                </div>
+                                                <div class="text-left col-md-3">
+                                                    <button type="submit" class="btn btn-info">Tìm kiếm <i class="la la-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tên danh mục nhiệm vụ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 1)
+                                                    {
+                                                        <td class="text-left">@item.danhMucNhiemVuName</td>
+                                                    }
+                                                    else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 2)
+                                                    {
+                                                        <td class="text-left">-@item.danhMucNhiemVuName</td>
+                                                    }
+                                                    else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 3)
+                                                    {
+                                                        <td class="text-left">--@item.danhMucNhiemVuName</td>
+                                                    }
+                                                    else if (item.capDanhMuc.HasValue && item.capDanhMuc.Value == 4)
+                                                    {
+                                                        <td class="text-left">---@item.danhMucNhiemVuName</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="text-left">@item.danhMucNhiemVuName</td>
+                                                    }
+                                                    <td>
+                                                        @if (!_service.CheckUsingDanhMucNhiemVu(item.danhMucNhiemVuId))
+                                                        {
+                                                            <button type="button" onclick="updateDanhMucNhiemVu('@item.danhMucNhiemVuId')" class="btn btn-info btn-sm"><i class="fa fa-recycle"></i> Sửa</button>
+                                                            <button type="button" onclick="deleteDanhMucNhiemVu('@item.danhMucNhiemVuId')" class="btn btn-info btn-sm"><i class="fa fa-trash"></i> Xóa</button>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-sm-12">
+                                <div class="row bg-form-table">
+                                    <div class="col-sm-12 button-list">
+                                        <div class="row">
+                                            <div class="col-md-5 text-left">
+                                                <button type="button" class="btn btn-danger btn-w-m mb-1 btn-sm" onclick="AddDanhMucNhiemVu()">
+                                                    Thêm mới
+                                                </button>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalDanhMucNhiemVu" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Thêm mới danh mục nhiệm vụ</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" id="modalBodyNhiemVu">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section scripts {
+    <script>
+        function AddDanhMucNhiemVu() {
+            $("#modalBodyNhiemVu").load("@Url.Action("ThemMoiDanhMucNhiemVu", "Home")");
+            $("#modalDanhMucNhiemVu").modal("show");
+        }
+        function updateDanhMucNhiemVu(x) {
+            $("#modalDanhMucNhiemVu").load("/Home/CapNhatDanhMucNhiemVu/" + x);
+            $("#modalDanhMucNhiemVu").modal("show");
+        }
+        function deleteDanhMucNhiemVu(x) {
+            var result = confirm("Bạn có chắc chắn muốn xóa không?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/XoaDanhMucNhiemVu",
+                    data: { Id: x },
+                    datatype: "json",
+                    success: function (data) {
+
+                        document.location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}

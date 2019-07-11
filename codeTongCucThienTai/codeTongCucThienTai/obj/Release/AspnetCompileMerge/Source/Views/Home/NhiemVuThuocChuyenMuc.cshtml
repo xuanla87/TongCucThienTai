@@ -1,0 +1,26 @@
+﻿@{
+    string partent = ViewBag.Count;
+    int count = 0;
+}
+@model IEnumerable<codeTongCucThienTai.Models.NhiemVu>
+@foreach (var item in Model)
+{
+    count++;
+    <tr class="">
+        <td class="text-left">@partent.@count</td>
+        <td class="text-left"><a href="#" onclick="xemNhiemVu('@item.nhiemVuId')">@item.nhiemVuName</a></td>
+        <td class="text-left">@item.nguonVonName</td>
+        <td class="text-left">@item.donViDeXuatName</td>
+        <td class="text-left">@item.donViDutoanName</td>
+        <td>@item.namKeHoach</td>
+        <td class="red text-right text-bold">@item.giaTriDeXuat.ToString("N0")</td>
+        <td class="red text-right text-bold">@item.giaTriDeXuat2.ToString("N0")</td>
+        <td class="text-left">@item.ghiChu </td>
+        <td>
+            <button type="button" class="btn btn-info btn-sm" onclick="suaNhiemVu('@item.nhiemVuId')"><i class="fa fa-recycle"></i> Sửa</button>
+            <button type="button" class="btn btn-info btn-sm" onclick="xoaNhiemVu('@item.nhiemVuId')"><i class="fa fa-trash"></i> Xóa</button>
+            <button type="button" class="btn btn-info btn-sm" onclick="duyetNhiemVu('@item.nhiemVuId')"><i class="fa fa-check"></i> Duyệt</button>
+        </td>
+    </tr>
+}
+

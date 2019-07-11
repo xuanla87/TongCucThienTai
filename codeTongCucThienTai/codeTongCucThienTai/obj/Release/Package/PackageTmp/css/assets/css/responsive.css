@@ -1,0 +1,733 @@
+@charset "UTF-8";
+/*============================================================================================*/
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+
+@media only screen and (min-width: 1820px) and (max-height: 1080px) {
+
+    .Left-table1 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 465px !important;
+    }
+
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 74vh;
+    }
+    .popup-detail .modal-body {
+        max-height: 620px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .detail-store .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 84vh !important;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+
+@media only screen and (min-width: 1820px) and (max-height: 969px) {
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 72vh !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 620px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .form-profile .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 66vh;
+    }
+
+
+    .detail-store .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 83vh !important;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1680px and up)
+    .Left808x200 .tableFixHead {
+    overflow: scroll !important;
+ height: 750px !important;
+    border: 1px solid #d1deea !important;
+}   
+
+
+
+.popup-detail .modal-body{
+    max-height: 800px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
+
+
+
+}
+/*========================================Màn-Thịnh=============================================*/
+
+/* Extra large devices (large laptops and desktops, 1680px and up) */
+@media only screen and (min-width: 1450px) and (max-height: 960px) {
+
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 68vh !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 650px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+}
+
+@media only screen and (min-width: 1450px) and (max-height: 944px) {
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 64vh !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 611px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .Left-table .tableFixHead {
+        overflow: scroll !important;
+        max-height: 535px !important;
+    }
+
+    .Left-table1 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 465px !important;
+    }
+
+
+    .detail-store .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 78vh !important;
+    }
+
+    /*---form--thong---tin---*/
+    .view-account .side-bar {
+        min-height: 485px !important;
+    }
+    
+    .view-account .content-panel {
+        min-height: 485px !important;
+    }
+    
+    .view-account .content-panel {
+        padding: 0px 30px 20px 30px ;
+    }
+    /*---End-form--thong---tin---*/
+
+    .form-profile .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 434px;
+    }
+    .home-scoll {
+        overflow-y: scroll !important;
+        overflow-x: hidden;
+        max-height: 79vh !important;
+    }
+    
+    
+}
+
+/* MEDIA QUERIES size 768/1200px  */
+
+/*===============màn-luận và chung=============================================================================*/
+@media only screen and (min-width: 1366px) and (max-height: 626px)
+{
+
+   
+
+    .popup-detail .modal-body {
+        max-height: 482px !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    .Left-table1 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 360px !important;
+    }
+
+    /*---form--thong---tin---*/
+
+
+.view-account .content-panel {
+    min-height: 463px;
+}
+
+.home-scoll {
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+    max-height: 469px !important;
+}
+
+} 
+
+/*===============màn-hà=============================================================================*/
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .Left-table .tableFixHead {
+        overflow: scroll !important;
+        max-height: 435px !important;
+    }
+
+    .Left-table1 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 345px !important;
+    }
+
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 388px !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 513px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    .popup-detail2 .modal-body {
+        max-height: 565px !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    .detail-store .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 493px !important;
+    }
+
+
+
+    .store-detail .mt-2 {
+        margin-top: 20px !important;
+    }
+    .store-detail .mt-1 {
+        margin-top: 20px !important;
+    }
+    /*--độ rộng bảng--*/
+    .table td, .table th {
+        padding: .5rem 0.6rem;
+        vertical-align: middle;
+    }
+
+/*---form--thong---tin---*/
+.view-account .side-bar {
+    min-height: 357px;
+}
+
+.view-account .content-panel {
+    min-height: 463px;
+}
+
+.home-scoll {
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+    max-height: 469px !important;
+}
+   
+}
+
+
+/* Màn của hồng  */
+
+@media only screen and (max-width: 1360px) {
+    .Left-table .tableFixHead {
+        overflow: scroll !important;
+        max-height: 415px !important;
+    }
+
+    .Left-table1 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 345px !important;
+    }
+
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 357px !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 482px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .detail-store .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 462px !important;
+    }
+
+
+    .store-detail .mt-2 {
+        margin-top: 10px !important;
+    }
+    .store-detail .mt-1 {
+        margin-top: 10px !important;
+    }
+    /*--độ rộng bảng--*/
+    .table td, .table th {
+        padding: .5rem 0.6rem;
+        vertical-align: middle;
+    }
+
+
+
+/*---form--thong---tin---*/
+    .view-account .side-bar {
+    min-height: 357px;
+}
+
+.view-account .content-panel {
+    min-height: 463px;
+}
+
+.view-account .content-panel {
+    padding: 0px 30px 20px 30px;
+}
+/*---End-form--thong---tin---*/
+
+.home-scoll {
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+    max-height: 469px !important;
+}
+
+}
+
+/* MEDIA QUERIES size 768/1200px  */
+
+/*============================================================================================*/
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 290px !important;
+    }
+}
+
+/* END MEDIA QUERIES size 768/1200px  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES max-width 1024px  */
+
+/*============================================================================================*/
+
+@media (max-width: 1024px) {
+
+  
+
+/* LOGO H1 FOR RETINA DISPLAY  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES max-width 991px  */
+
+/*============================================================================================*/
+
+@media (max-width: 991px) {}
+
+/* END MEDIA QUERIES max-width 991px  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES size 769/979px  */
+
+/*============================================================================================*/
+
+@media (min-width: 769px) and (max-width: 979px) {}
+
+/* END MEDIA QUERIES size 769/979px  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES max-width 768px - TABLETS  */
+
+/*============================================================================================*/
+
+@media (max-width: 768px) {
+
+ 
+
+    .store {
+        font-size: 14px !important;
+    }
+    .button-list .modal-body {
+        max-height: 690px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+    .popup-detail .modal-body {
+        max-height: 690px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .Left808x200 .tableFixHead {
+        overflow: scroll !important;
+        max-height: 690px !important;
+    }
+    .w-stt {
+        width: auto;
+    }
+    .w-date {
+        width: auto;
+    }
+    .w-30 {
+        width: auto;
+    }
+    .w-27 {
+        width: auto;
+    }
+    .w-t-31 {
+        width: auto;
+    }
+    .w-15 {
+        width: auto;
+    }
+    .w-10 {
+        width: auto;
+    }
+    .w-20 {
+        width: auto;
+    }
+    .w-15 {
+        width: auto;
+    }
+    .w-text-l {
+        padding-left: 0px;
+    }
+    .w-text-2 {
+        padding-left: 0px;
+    }
+    .w-text-3 {
+        padding-left: 0px;
+    }
+    .w-text-4 {
+        padding-left: 0px;
+    }
+
+
+    .t-text {
+        margin: 0px 0 0 5px;
+        position: absolute;
+        bottom: 0px;
+        left: 123px;
+        text-decoration: underline;
+        margin: 0px;
+        padding: 0px;
+        width: -webkit-fill-available;
+    }
+    
+    .text-time {
+        float: left;
+    }
+
+    .float-md-left {
+        margin-left: 0px;
+    }
+   
+}
+
+/* MEDIA QUERIES max-width 768px - TABLETS  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES max-width 767px - MOBILE LANDSCAPE  */
+
+/*============================================================================================*/
+
+@media (max-width: 767px) {
+
+    .vertical-overlay-menu .main-menu .navigation>li>a>i.font-menu
+{font-size:16px !important;
+    position: relative;
+    top: 6px;
+}
+.main-menu.menu-dark .navigation>li>a i, .main-menu.menu-light .navigation>li>a i {
+    top: 5px;
+}
+.vertical-overlay-menu .main-menu .navigation li.has-sub>a:not(.mm-next):after
+{
+    top:10px;
+}
+
+
+    .invoice-right {
+        text-align: left;
+    }
+    .bg-search-form .text-right {
+        text-align: left !important;
+    }
+    .bg-search-form .mt-0 {
+        margin-top: 0px !important;
+    }
+    .bg-search-form .mt-2 {
+        margin-top: 0px !important;
+    }
+    .arrow-ribbon {
+        position: inherit !important;
+    }
+    .btn-w-m {
+        width: 100%;
+    }
+    .button-list button {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .store-mb {
+        font-size: 12px !important;
+        padding: 1.3rem .4rem !important;
+    }
+    .bg-tab .nav-item {
+        width: 100%;
+    }
+    .nav.nav-tabs .nav-item .nav-link {
+        width: 100%;
+    }
+    .table td, .table th {
+        padding: .75rem 2rem;
+    }
+    .table-2 .table td, .table-2 .table th {
+        padding: .35rem 2rem;
+    }
+    .button-list .ml-2 {
+        margin-left: 0rem!important;
+    }
+    .width-table-td {
+        width: auto;
+    }
+    .pad-r-table-r {
+        padding-right: 10px !important;
+    }
+    .pad-r-table-l {
+        padding-left: 10px !important;
+    }
+    .w-table {
+        width: 51% !important
+    }
+    .w-25 {
+        width: auto;
+    }
+    .ava-kh img {
+        width: 130px;
+        height: 115px;
+    }
+    .form-kh .table td, .form-kh .table th {
+        padding: .75rem 2rem;
+    }
+    .date-npt .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .date-npt .ml-1 {
+        margin-left: 0px !important;
+        margin-top: 8px;
+    }
+    .text-era {
+        height: auto;
+    }
+    .text-era-1 {
+        height: auto;
+    }
+    .pad-col {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .mad-col {
+        padding-right: 15px !important;
+        padding-left: 15px !important;
+    }
+    .pad-search {
+        margin-top: 8px;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    .button-search-1 {
+        margin-left: 0px;
+    }
+    .form-nv .card-body .form-control {
+        width: auto;
+    }
+    .btn-user .btn {
+        position: inherit;
+    }
+    .none-mk-d {
+        display: none;
+    }
+    .none-mk {
+        display: block;
+    }
+    .header-navbar .navbar-header {
+        height: 3.5rem;
+    }
+    .float-md-left {
+        margin-left: 0px;
+    }
+    .store-detail .text-right {
+        text-align: left !important;
+    }
+    .sotre-top .col-md-4 {
+        padding-right: 15px;
+    }
+    .t-button {
+        position: inherit;
+    }
+    .money-left .border-l {
+        /* padding-left: 20px; */
+        /* border-left: 1px solid #d9d9d9; */
+        background: #f8f8f9;
+        /* margin: 5px; */
+        border: 0px;
+        margin-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .page-blue .nav.nav-tabs .nav-item {
+        border-right: 0px;
+    }
+    .w-stt {
+        width: auto;
+    }
+    .w-date {
+        width: auto;
+    }
+    .w-30 {
+        width: auto;
+    }
+    .w-27 {
+        width: auto;
+    }
+    .w-t-31 {
+        width: auto;
+    }
+    .w-15 {
+        width: auto;
+    }
+    .w-10 {
+        width: auto;
+    }
+    .w-20 {
+        width: auto;
+    }
+    .w-15 {
+        width: auto;
+    }
+    .w-text-l {
+        padding-left: 0px;
+    }
+    .w-text-2 {
+        padding-left: 0px;
+    }
+    .w-text-3 {
+        padding-left: 0px;
+    }
+    .w-text-4 {
+        padding-left: 0px;
+    }
+    .arrows-cd {
+        position: relative;
+        left: 0;
+        top: 0;
+        padding: 10px 0px 10px 25px;
+        text-align: center;
+    }
+    .tool-comment {
+        position: relative;
+        top: -3px;
+        left: -7px;
+    }
+    .money-body {
+        width: 100%;
+        margin-left: 20px;
+        margin-right: 20px;
+        border-bottom: 1px solid #ECEFF1;
+        padding: 0 0 5px 0;
+    }
+    .border-right-blue-grey.border-right-lighten-5 {
+        border-right: 0px !important;
+    }
+    .money2 .dropdown .dropdown-menu {
+        min-width: 100%;
+        background: #FFF;
+        padding: 0 1rem;
+        margin: 0;
+        height: auto;
+        margin-right: 0px;
+    }
+    .money-body1 {
+        width: 100%;
+        border-bottom: 1px solid #ECEFF1;
+        margin-right: 0.6rem;
+        padding-bottom: 10px;
+        margin-bottom: 0px;
+    }
+    .money2 .text-right {
+        text-align: left !important;
+    }
+
+    .view-account .side-bar {
+        min-height: inherit !important;
+    }
+
+    .page-blue .nav.nav-tabs .nav-item+.nav-item {
+        padding-left: 0px; 
+        border-radius: 0px;
+        padding-top: 10px;
+    }
+
+    .table-mr{
+        padding-left: 0px !important;
+    }
+
+    .text-time {
+        margin: 5px 0px 5px 0;
+        color: #006266;
+    }
+
+    .sub-menu {
+        width: 100%;}
+
+        .footer .px-2 {
+            padding-right: 0rem!important;
+        } 
+
+        .d-block {
+            display: inline-block !important;
+        }
+
+        .footer-color {
+            width:100%;
+        }
+
+        .title-pie, .title-pie1, .title-pie2 {
+            text-align:center;
+        }
+}
+
+/* END MEDIA QUERIES max-width 767px - MOBILE LANDSCAPE  */
+
+/*============================================================================================*/
+
+/* MEDIA QUERIES max-width 480px - MOBILE PORTRAIT  */
+
+/*============================================================================================*/
+
+@media (max-width: 480px) {}
+
+/* END MEDIA QUERIES max-width 480px - MOBILE PORTRAIT  */

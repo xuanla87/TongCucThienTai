@@ -1,0 +1,17 @@
+﻿.none {
+}
+
+.huongdansudung {
+    border-radius: 5px;
+    border: 1px solid #fff;
+    padding: 3px 8px !important;
+    background: #fff;
+}
+
+.huongdansudung {
+    color: #ff0000 !important;
+}
+
+    .huongdansudung i {
+        margin: 0px !important;
+    }

@@ -1,0 +1,159 @@
+﻿@model codeTongCucThienTai.Models.NhiemVu
+@using (Html.BeginForm("PheDuyetKeHoachNhaThau", "Home"))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header bg-info white">
+        <h2 class="modal-title white">
+            Quyết định phê duyệt kế hoạch nhà thầu
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="la la-close"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <input type="hidden" id="_hiddenIdPDKHNT" name="_hiddenIdPDKHNT" value="@Model.nhiemVuId">
+                <input type="hidden" id="_hiddenSelectPDKHNT" name="_hiddenSelectPDKHNT">
+                <input type="hidden" id="_hiddenFilePDKHNT" name="_hiddenFilePDKHNT">
+                @*<div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Tên nhà thầu</label>
+                        <div class="col-md-8">
+                            <input type="text" name="_txtTenNhaThau" id="_txtTenNhaThau" class="form-control input-sm" placeholder="Nhập tên..">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Giá dự thầu</label>
+                        <div class="col-md-8">
+                            <input type="text" name="_txtGiaDuThau" id="_txtGiaDuThau" onkeyup="formatCurrencyNo('_txtGiaDuThau')" class="form-control input-sm" placeholder="Nhập giá..">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control"></label>
+                        <div class="col-md-8 text-right">
+                            <button type="button" onclick="AddNhaThau()" class="btn btn-info">Thêm nhà thầu</button>
+                        </div>
+                    </div>
+                    <div id="_ViewNhaThau">
+                    </div>
+                </div>*@
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Tệp đính kèm</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" id="_selectFilePDKHNT" name="_selectFilePDKHNT" class="form-control input-sm" placeholder="Nhập tệp..">
+                                <div class="input-group-append">
+                                    <button type="button" onclick="AddFilePDKHNT()" class="btn btn-info"><i class="fa fa-plus"></i> Thêm tệp</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Tệp đã chọn</label>
+                        <div class="col-md-8" id="_ListFilesPDKHNT">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <div class="col-md-6 text-left">
+            <button type="button" onclick="ShowAddData()" class="btn btn-info"> <i class="fa fa-plus"></i>Thêm mới kho dữ liệu</button>
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+        </div>
+    </div>
+}
+<script>
+    function AddFilePDKHNT() {
+        var _flie = $("#_selectFilePDKHNT").val();
+        var _ListFile = $("#_hiddenFilePDKHNT").val();
+        $.ajax({
+            url: "/Home/AddFileToList",
+            type: "GET",
+            dataType: "json",
+            data: { FileName: _flie, ListFile: _ListFile },
+            success: function (data) {
+                if (data != null) {
+                    $("#_ListFilesPDKHNT").append("<div id=\"item_" + data.taiLieuId + "\">" + data.taiLieuName + "</div>");
+                    $("#_hiddenFilePDKHNT").val($("#_hiddenFilePDKHNT").val() + ";" + data.taiLieuName);
+                    $("#_selectFilePDKHNT").val("");
+                }
+                else {
+                    $("#_selectFilePDKHNT").val("");
+                }
+            }
+        })
+    }
+    $(document).ready(function () {
+        $("#_selectFilePDKHNT").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/LayTaiLieu",
+                    type: "POST",
+                    dataType: "json",
+                    data: { searchKey: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.taiLieuName, value: item.taiLieuName };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "",
+                results: function (count) {
+                    return count + (count > 1 ? ' results' : ' result ') + ' found';
+                }
+            }
+        });
+    })
+    function AddNhaThau() {
+        var _NhaThau = $("#_txtTenNhaThau").val();
+        var _GiaThau = $("#_txtGiaDuThau").val();
+        var _NhiemVuId = $("#_hiddenIdPDKHNT").val();
+        var _Select = $("#_hiddenSelectPDKHNT").val();
+        if (_NhaThau.length > 0 && _GiaThau.length > 0) {
+            $.ajax({
+                url: "/Home/ThemNhaThau",
+                type: "GET",
+                dataType: "json",
+                data: { _Name: _NhaThau, _Gia: _GiaThau, _ListSelect: _Select, _NhiemVuId: _NhiemVuId },
+                success: function (data) {
+                    $("#_txtTenNhaThau").val("");
+                    $("#_txtGiaDuThau").val("");
+                    $("#_ViewNhaThau").html(data._Html);
+                    $("#_hiddenSelectPDKHNT").val(data.GoiThaus);
+                }
+            })
+        }
+        else {
+            displayMessage("Bạn chưa nhập nhà thầu hoặc giá dự thầu!", 'error');
+        }
+    }
+    function formatCurrencyNo(txt) {
+        var num = document.getElementById(txt).value;
+        num = num.toString().replace(/\$|\,/g, '');
+        if (isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num * 100 + 0.50000000001);
+        cents = num % 100;
+        num = Math.floor(num / 100).toString();
+        if (cents < 10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+                num.substring(num.length - (4 * i + 3));
+        if (sign && num != "0") {
+            document.getElementById(txt).value = (((sign) ? '' : '-') + num);
+        }
+        else {
+            document.getElementById(txt).value = null;
+        }
+    }
+</script>

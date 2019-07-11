@@ -1,0 +1,164 @@
+﻿@using codeTongCucThienTai.Models;
+@{
+    ViewBag.Title = "Danh sách tài liệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+    var _service = new TongCucThienTaiServices();
+}
+@model List<codeTongCucThienTai.Models.TaiLieu>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("KhoDuLieu","Home")">Danh sách tài liệu</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+
+                        <div class="card-body">
+                            @using (Html.BeginForm("KhoDuLieu", "Home", FormMethod.Get, new { @id = "danh-sach-tai-lieu-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-4">
+                                                    <input type="text"  autocomplete="off" id="SearchKey" name="SearchKey" value="@ViewBag.SearchKey" class="form-control input-sm" placeholder="Từ khóa..." autocomplete="off">
+                                                </div>
+                                                <div class="text-left col-md-3">
+                                                    <button type="submit" class="btn btn-info">Tìm kiếm <i class="la la-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt">STT</th>
+                                                    <th>Tên file</th>
+                                                    <th>Đường dẫn file</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var item in Model)
+                                            {
+                                                count++;
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>@item.taiLieuName</td>
+                                                    <td><a href="../@item.taiLieuLink">@item.taiLieuLink</a></td>
+                                                    <td>
+                                                        @if (!_service.CheckUsingTaiLieu(item.taiLieuId))
+                                                        {
+                                                            <button type="button" onclick="updateTaiLieu('@item.taiLieuId')" class="btn btn-info btn-sm"><i class="fa fa-recycle"></i> Sửa</button>
+                                                            <button type="button" onclick="deleteTaiLieu('@item.taiLieuId')" class="btn btn-info btn-sm"><i class="fa fa-trash"></i> Xóa</button>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-sm-12">
+                                <div class="row bg-form-table">
+                                    <div class="col-sm-12 button-list">
+                                        <div class="row">
+                                            <div class="col-md-5 text-left">
+                                                <button type="button" class="btn btn-danger btn-w-m mb-1 btn-sm" onclick="AddTaiLieu()">
+                                                    Thêm mới
+                                                </button>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalTaiLieu" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Thêm mới tài liệu</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" id="modalBodyTaiLieu">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalUpdateTaiLieu" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-info white">
+                                                                <h2 class="modal-title white">Cập nhập tài liệu</h2>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section scripts {
+    <script>
+        function AddTaiLieu() {
+            $("#modalBodyTaiLieu").load("@Url.Action("ThemMoiDuLieu", "Home")");
+            $("#modalTaiLieu").modal("show");
+        }
+        function updateTaiLieu(x) {
+            $("#modalUpdateTaiLieu .modal-content .modal-body").load("/Home/CapNhapDuLieu/" + x);
+            $("#modalUpdateTaiLieu").modal("show");
+        }
+        function deleteTaiLieu(x) {
+            var result = confirm("Bạn có chắc chắn muốn xóa không?");
+            if (result) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Home/XoaTaiLieu",
+                    data: { Id: x },
+                    datatype: "json",
+                    success: function (data) {
+                        if (data) {
+                            displayMessage($('#success').val(), 'error');
+                        }
+                        else {
+                            displayMessage($('#error').val(), 'error');
+                        }
+                        document.location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}

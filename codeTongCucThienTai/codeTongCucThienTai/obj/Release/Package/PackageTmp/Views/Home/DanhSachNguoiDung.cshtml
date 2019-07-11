@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+@model List<codeTongCucThienTai.Models.ApplicationUser>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("DanhSachNguoiDung","Home")">Danh sách người dùng</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row bg-form-table">
+                            <div class="button-list">
+                                <button type="button" onclick="AddUser()" class="btn btn-danger btn-w-m mb-1 btn-sm">
+                                    Thêm mới
+                                </button>
+                                @if (User.IsInRole("SuperAdmin"))
+                                {
+                                    <button type="button" onclick="AddRole()" class="btn btn-danger btn-w-m mb-1 btn-sm">
+                                        Thêm quyền
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="Left808x200 mt-1">
+                                <div class="table-responsive table-1 tableFixHead">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Họ tên</th>
+                                                <th>Tài khoản</th>
+                                                <th>Thư điện tử</th>
+                                                <th>Quyền</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var item in Model)
+                                        {
+                                            count++;
+                                            <tr>
+                                                <td>@count</td>
+                                                <td>@item.FullName</td>
+                                                <td>@item.UserName</td>
+                                                <td>@item.Email</td>
+                                                <td>@Html.Action("getRoleName", "Home", new { _id = item.Roles.FirstOrDefault() })</td>
+                                                <td>
+                                                    <button onclick="updateUser('@item.Id')" class="btn btn-info btn-sm"><i class="fa fa-recycle"></i> Sửa</button>
+                                                    @if (item.LockoutEnabled && item.LockoutEndDateUtc.HasValue)
+                                                    {
+                                                        <button onclick="openUser('@item.Id')" class="btn btn-info btn-sm"><i class="fa fa-lock-open"></i> Mở khóa</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button onclick="deleteUser('@item.Id')" class="btn btn-info btn-sm"><i class="fa fa-lock"></i> Khóa</button>
+                                                    }
+                                                    <button onclick="changePass('@item.Id')" class="btn btn-info btn-sm"><i class="fa fa-key"></i> Đổi mật khẩu</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade text-left popup-detail" id="modal1" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info white">
+                <h2 class="modal-title white">Thêm quyền</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form tat-toan form-horizontal form-edit">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Tên quyền</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="RoleName" class="form-control input-sm" placeholder="Nhập tên quyền..">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right">
+                <button type="button" onclick="NewRole()" class="btn btn-info">Lưu dữ liệu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left popup-detail" id="modal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info white">
+                <h2 class="modal-title white">Thêm mới</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form tat-toan form-horizontal form-edit">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Họ và tên</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="FullName" class="form-control input-sm" placeholder="Nhập tên..">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Tài khoản</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="UserName" class="form-control input-sm" placeholder="Nhập tài khoản..">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Mật khẩu</label>
+                                    <div class="col-md-9">
+                                        <input type="password" id="Password" class="form-control input-sm" placeholder="Nhập mật khẩu..">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Thư điện tử</label>
+                                    <div class="col-md-9">
+                                        <input type="email" id="Email" class="form-control input-sm" placeholder="Nhập email..">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control">Quyền</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownList("Role", new SelectList(ViewBag.Role, "Text", "Text"), "- Chọn quyền -", new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-right">
+                <button type="button" onclick="NewUser()" class="btn btn-info">Lưu dữ liệu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left popup-detail" id="modal3" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="bodyChangePass">
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left popup-detail" id="modal4" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="bodyUpdateUser">
+
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        function AddRole() {
+            $("#modal1").modal("show");
+        }
+        function AddUser() {
+            $("#modal2").modal("show");
+        }
+        function changePass(x) {
+            $("#bodyChangePass").load("/Home/DoiMatKhau/" + x);
+            $("#modal3").modal("show");
+        }
+        function updateUser(x) {
+            $("#bodyUpdateUser").load("/Home/CapNhatNguoiDung/" + x);
+            $("#modal4").modal("show");
+        }
+        function deleteUser(x) {
+            $.ajax({
+                type: "GET",
+                url: "/Home/XoaNguoiDung",
+                data: { Id: x },
+                datatype: "json",
+                success: function (data) {
+                    if (data) {
+                        displayMessage($('#success').val(), 'error');
+                    }
+                    else {
+                        displayMessage($('#error').val(), 'error');
+                    }
+                    document.location.reload(true);
+                }
+            });
+        }
+        function openUser(x) {
+            $.ajax({
+                type: "GET",
+                url: "/Home/OpenNguoiDung",
+                data: { Id: x },
+                datatype: "json",
+                success: function (data) {
+                    if (data) {
+                        displayMessage($('#success').val(), 'error');
+                    }
+                    else {
+                        displayMessage($('#error').val(), 'error');
+                    }
+                    document.location.reload(true);
+                }
+            });
+        }
+        function NewRole() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/ThemQuyen",
+                data: { _roleName: $("#RoleName").val() },
+                datatype: "json",
+                success: function (data) {
+                    if (data) {
+                        document.location.reload(true);
+                    }
+                    else {
+                        alert("Tên quyên đã tồn tại!");
+                    }
+                }
+            });
+        }
+        function NewUser() {
+            $.ajax({
+                type: "GET",
+                url: "/Home/ThemNguoiDung",
+                data: { _fullName: $("#FullName").val(), _userName: $("#UserName").val(), _email: $("#Email").val(), _passWord: $("#Password").val(), _roleName: $("#Role").val() },
+                datatype: "json",
+                success: function (data) {
+                    if (data.Succeeded) {
+                        document.location.reload(true);
+                    }
+                    else {
+                        alert(data.Errors);
+                    }
+                }
+            });
+        }
+    </script>
+}

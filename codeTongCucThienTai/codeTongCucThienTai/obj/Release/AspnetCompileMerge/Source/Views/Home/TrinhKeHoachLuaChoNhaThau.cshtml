@@ -1,0 +1,92 @@
+﻿@model codeTongCucThienTai.Models.NhiemVu
+@using (Html.BeginForm("TrinhKeHoachLuaChoNhaThau", "Home"))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header bg-info white">
+        <h2 class="modal-title white">
+            Trình kế hoạch lựa chọn nhà thầu
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="la la-close"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row">
+                <input type="hidden" id="_hiddenFilesTKHLCNT" name="_hiddenFilesTKHLCNT">
+                <input type="hidden" id="_hiddenIdTKHLCNT" name="_hiddenIdTKHLCNT" value="@Model.nhiemVuId">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Tệp đính kèm</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" id="_selectFileTKHLCNT" name="_selectFileTKHLCNT" class="form-control input-sm" placeholder="Nhập tệp..">
+                                <div class="input-group-append">
+                                    <button type="button" onclick="AddFileTKHLCNT()" class="btn btn-info"><i class="fa fa-plus"></i> Thêm tệp</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 label-control">Tệp đã chọn</label>
+                        <div class="col-md-8" id="_ListFilesTKHLCNT">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <div class="col-md-6 text-left">
+            <button type="button" onclick="ShowAddData()" class="btn btn-info"> <i class="fa fa-plus"></i>Thêm mới kho dữ liệu</button>
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+        </div>
+    </div>
+}
+<script>
+    function AddFileTKHLCNT() {
+        var _flie = $("#_selectFileTKHLCNT").val();
+        var _ListFile = $("#_hiddenFilesTKHLCNT").val();
+        $.ajax({
+            url: "/Home/AddFileToList",
+            type: "GET",
+            dataType: "json",
+            data: { FileName: _flie, ListFile: _ListFile },
+            success: function (data) {
+                if (data != null) {
+                    $("#_ListFilesTKHLCNT").append("<div id=\"item_" + data.taiLieuId + "\">" + data.taiLieuName + "</div>");
+                    $("#_hiddenFilesTKHLCNT").val($("#_hiddenFilesTKHLCNT").val() + ";" + data.taiLieuName);
+                    $("#_selectFileTKHLCNT").val("");
+                }
+                else {
+                    $("#_selectFileTKHLCNT").val("");
+                }
+            }
+        })
+    }
+    $(document).ready(function () {
+        $("#_selectFileTKHLCNT").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/LayTaiLieu",
+                    type: "POST",
+                    dataType: "json",
+                    data: { searchKey: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.taiLieuName, value: item.taiLieuName };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "",
+                results: function (count) {
+                    return count + (count > 1 ? ' results' : ' result ') + ' found';
+                }
+            }
+        });
+    })
+</script>

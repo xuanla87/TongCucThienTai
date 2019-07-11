@@ -1,0 +1,105 @@
+﻿@{
+    int parent = (int)ViewBag.Count;
+    int count = 0;
+    string STT = ViewBag.STT;
+}
+@model IEnumerable<codeTongCucThienTai.Models.NhiemVu>
+@foreach (var item in Model)
+{
+    count++;
+    <tr>
+        <td class="text-left">@STT.@count</td>
+        <td class="text-left"><a href="#" onclick="xemNhiemVu('@item.nhiemVuId')">@item.nhiemVuName</a></td>
+        <td class="text-left">@item.donViDeXuatName</td>
+        <td class="text-left">@item.nguonVonName</td>
+        @if (item.giaTriGiao.HasValue && item.giaTriGiao > 0)
+        {
+            <td class="red text-right text-bold">@item.giaTriGiao.GetValueOrDefault().ToString("N0")</td>
+
+        }
+        else
+        {
+            <td class="red text-right text-bold"></td>
+        }
+        @if (item.giaTriTrungThau.HasValue && item.giaTriTrungThau > 0)
+        {
+            <td class="red text-right text-bold">@item.giaTriTrungThau.GetValueOrDefault().ToString("N0")</td>
+
+        }
+        else
+        {
+            <td class="red text-right text-bold"></td>
+        }
+        <td class="text-left">@item.ghiChu </td>
+        @if (item.trangThai == 1)
+        {
+            <td class="text-left">Chưa triển khai</td>
+            <td class="text-left">
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-info" onclick="TrinhDeCuong('@item.nhiemVuId')"> Trình đề cương dự toán</button>
+                }
+            </td>
+        }
+        else if (item.trangThai == 2)
+        {
+            <td class="text-left">Đã trình đề cương dự toán</td>
+            <td class="text-left">
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-info" onclick="PheDuyetDeCuong('@item.nhiemVuId')"> Quyết định phê duyệt đề cương dự toán</button>
+                }
+            </td>
+        }
+        else if (item.trangThai == 3)
+        {
+            <td class="text-left">Đã phê duyệt đề cương dự toán</td>
+            <td class="text-left">
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-info" onclick="KeHoachLuaChonNhaThau('@item.nhiemVuId')">Trình kế hoạch lựa chọn nhà thầu</button>
+                }
+            </td>
+        }
+        else if (item.trangThai == 4)
+        {
+            <td class="text-left">Đã trình kế hoạch lựa chọn nhà thầu</td>
+            <td class="text-left">
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-info" onclick="PheDuyetKeHoachNhaThau('@item.nhiemVuId')"> Quyết định phê duyệt kế hoạch nhà thầu</button>
+                }
+            </td>
+        }
+        else if (item.trangThai == 5)
+        {
+            <td class="text-left">Đã phê duyệt kế hoạch nhà thầu</td>
+            <td class="text-left">
+                <button type="button" class="btn btn-info" onclick="PheDuyetKetQuaChonNhaThau('@item.nhiemVuId')"> Quyết định phê duyệt kết quả lựa chọn nhà thầu</button>
+            </td>
+        }
+        else if (item.trangThai == 6)
+        {
+            <td class="text-left">Đã phê duyệt kết quả lựa chọn nhà thầu</td>
+            <td class="text-left">
+                <button type="button" class="btn btn-info" onclick="KyHopDong('@item.nhiemVuId')"> Ký hợp đồng</button>
+            </td>
+        }
+        else if (item.trangThai == 7)
+        {
+            <td class="text-left">Đã ký hợp đồng</td>
+            <td class="text-left">
+                <button type="button" class="btn btn-info" onclick="GiaiNgan('@item.nhiemVuId')"> Giải ngân</button>
+                @if (User.IsInRole("Admin"))
+                {
+                    <button type="button" class="btn btn-info" onclick="KetThuc('@item.nhiemVuId')"> Kết thúc</button>
+                }
+            </td>
+        }
+        else if (item.trangThai == 8)
+        {
+            <td class="text-left">Đã kết thúc</td>
+            <td class=""></td>
+        }
+    </tr>
+}

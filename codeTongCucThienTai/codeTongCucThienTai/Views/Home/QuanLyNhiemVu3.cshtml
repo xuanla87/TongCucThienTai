@@ -1,0 +1,685 @@
+﻿@{
+    ViewBag.Title = "Quản lý nhiệm vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<codeTongCucThienTai.Models.NhiemVuView>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("QuanLyNhiemVu3","Home")">Quản lý nhiệm vụ</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-header-right col-md-6 col-12 button-page-list money2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("QuanLyNhiemVu3", "Home", FormMethod.Get, new { @id = "quan-ly-nhiem-vu-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-3">
+                                                    <input type="text" id="SearchKey" name="SearchKey" class="form-control input-sm" value="@ViewBag.SearchKey" placeholder="Tên nhiệm vụ..." autocomplete="off">
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-2">
+                                                    @Html.DropDownList("DonViDeXuat", new SelectList(ViewBag.DonViDeXuat, "Value", "Text"), "-- Đơn vị thực hiện --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-3">
+                                                    @Html.DropDownList("TrangThai", new SelectList(ViewBag.TrangThai, "Value", "Text"), "-- Trạng thái --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group mb-1 col-sm-12 col-md-2 date-npt mad-col">
+                                                    <div class="row">
+                                                        <div class="text-left col-md-12 pad-search mad-col button-search-1">
+                                                            <button type="button" onclick="Search()" class="btn btn-info">Tìm kiếm <i class="la la-search"></i></button>
+                                                            <a href="#" class="card-link blue darken-2 t-text " data-toggle="modal" data-target="#large">
+                                                                Nâng cao
+                                                            </a>
+                                                            <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-info white">
+                                                                            <h2 class="modal-title white" id="myModalLabel17">Tìm kiếm nâng cao</h2>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="email-addr">Tên nhiệm vụ</label>
+                                                                                    <br>
+                                                                                    <input type="text" autocomplete="off" id="SearchKeyNC" name="SearchKeyNC" class="form-control input-sm" value="@ViewBag.SearchKey">
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Nguồn vốn</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("NguonVon", new SelectList(ViewBag.NguonVon, "Value", "Text"), "-- Nguồn vốn --", new { @class = "form-control input-sm" })
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Trạng thái</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("TrangThaiNC", new SelectList(ViewBag.TrangThai, "Value", "Text"), "-- Trạng thái --", new { @class = "form-control input-sm" })
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Đơn vị thực hiện</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("DonViDeXuatNC", new SelectList(ViewBag.DonViDeXuat, "Value", "Text"), "-- Đơn vị thực hiện --", new { @class = "form-control input-sm" })
+                                                                                </div>
+
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Đơn vị dự toán</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("DonViDuToan", new SelectList(ViewBag.DonViDuToan, "Value", "Text"), "-- Đơn vị dự toán --", new { @class = "form-control input-sm" })
+                                                                                </div>
+                                                                                <div class="skin skin-flat form-group mb-1 col-sm-12 col-md-3">
+                                                                                    <label for="tel-input">Năm kế hoạch</label>
+                                                                                    <br>
+                                                                                    @Html.DropDownList("NamKeHoach", new SelectList(ViewBag.NamKeHoach, "Value", "Text"), "-- Năm kế hoạch --", new { @class = "form-control input-sm" })
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" onclick="SearchNC()" class="btn btn-info">Tìm kiếm</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group none mb-1 col-sm-6 col-md-2 text-right left-search search-p">
+                                                    <span class=" print-dsnpt ">
+                                                        <button type="button" onclick="Print()" class="btn btn-info" title="In dánh sách"><i class="la la-print"></i></button>
+                                                        <button type="button" onclick="ExportExcel()" class="btn btn-info" title="Xuất Excel danh sách"><i class="la la-download"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table1 table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center"><input id="cbSTT" name="cbSTT" checked type="checkbox" /><br />STT</th>
+                                                    <th class="text-center w-350"><input id="cbName" name="cbName" checked type="checkbox" /><br />Tên nhiệm vụ</th>
+                                                    <th class="text-center"><input id="cbDVDeXuat" checked name="cbDVDeXuat" type="checkbox" /><br />Đơn vị thực hiện</th>
+                                                    <th class="text-center w-220">
+                                                        <input id="cbNguonVon" name="cbNguonVon" checked type="checkbox" /><br /> Nguồn vốn
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriGiao" checked name="cbGiaTriGiao" type="checkbox" /><br />Dự toán giao
+                                                        <br />
+                                                        <div class="text-right red">@Html.Raw(ViewBag.TotalGiao)</div>
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriDuyet" checked name="cbGiaTriDuyet" type="checkbox" /><br />Dự toán được duyệt
+                                                        <br />
+                                                        <div class="text-right red">@Html.Raw(ViewBag.TotalDuyet)</div>
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        Thời hạn trình
+                                                    </th>
+                                                    <th class="text-center w-220">
+                                                        <input id="cbGhiChu" name="cbGhiChu" checked type="checkbox" /><br />Ghi chú
+                                                    </th>
+                                                    <th>
+                                                        <input id="cbTrangThai" name="cbTrangThai" checked type="checkbox" /><br />Trạng thái
+                                                    </th>
+                                                    <th>Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    if (item.nhiemVuId > 0)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@item.STT</td>
+                                                            <td class="text-left"><a href="#" onclick="xemNhiemVu('@item.nhiemVuId')">@item.nhiemVuName</a></td>
+                                                            <td class="text-left">@item.donViDeXuatName</td>
+                                                            <td class="text-left">@item.nguonVonName</td>
+                                                            @if (item.giaTriGiao.HasValue && item.giaTriGiao > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriGiao.GetValueOrDefault().ToString("N0")</td>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold"></td>
+                                                            }
+                                                            @if (item.giaTriTrungThau.HasValue && item.giaTriTrungThau > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriTrungThau.GetValueOrDefault().ToString("N0")</td>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold"></td>
+                                                            }
+                                                            <td class="text-left">@item.hanTrinh </td>
+                                                            <td class="text-left">@item.ghiChu </td>
+                                                            @if (item.trangThai == 1)
+                                                            {
+                                                                <td class="text-left">Chưa triển khai</td>
+                                                                <td class="text-left">
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-info" onclick="TrinhDeCuong('@item.nhiemVuId')"> Trình đề cương dự toán</button>
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 2)
+                                                            {
+                                                                <td class="text-left">Đã trình đề cương dự toán</td>
+                                                                <td class="text-left">
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-info" onclick="PheDuyetDeCuong('@item.nhiemVuId')"> Quyết định phê duyệt đề cương dự toán</button>
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 3)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt đề cương dự toán</td>
+                                                                <td class="text-left">
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-info" onclick="KeHoachLuaChonNhaThau('@item.nhiemVuId')">Trình kế hoạch lựa chọn nhà thầu</button>
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 4)
+                                                            {
+                                                                <td class="text-left">Đã trình kế hoạch lựa chọn nhà thầu</td>
+                                                                <td class="text-left">
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-info" onclick="PheDuyetKeHoachNhaThau('@item.nhiemVuId')"> Quyết định phê duyệt kế hoạch nhà thầu</button>
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 5)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt kế hoạch nhà thầu</td>
+                                                                <td class="text-left">
+                                                                    <button type="button" class="btn btn-info" onclick="PheDuyetKetQuaChonNhaThau('@item.nhiemVuId')"> Quyết định phê duyệt kết quả lựa chọn nhà thầu</button>
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 6)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt kết quả lựa chọn nhà thầu</td>
+                                                                <td class="text-left">
+                                                                    <button type="button" class="btn btn-info" onclick="KyHopDong('@item.nhiemVuId')"> Ký hợp đồng</button>
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 7)
+                                                            {
+                                                                <td class="text-left">Đã ký hợp đồng</td>
+                                                                <td class="text-left">
+                                                                    <button type="button" class="btn btn-info" onclick="GiaiNgan('@item.nhiemVuId')"> Giải ngân</button>
+                                                                    @if (User.IsInRole("Admin"))
+                                                                    {
+                                                                        <button type="button" class="btn btn-info" onclick="KetThuc('@item.nhiemVuId')"> Kết thúc</button>
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else if (item.trangThai == 8)
+                                                            {
+                                                                <td class="text-left">Đã kết thúc</td>
+                                                                <td class=""></td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr class="">
+                                                            <td class="text-left">@item.STT</td>
+                                                            @if (item.Level.HasValue && item.Level.Value == 1)
+                                                            {
+                                                                <td class="text-left text-bold text-uppercase">@item.nhiemVuName</td>
+                                                            }
+                                                            else if (item.Level.HasValue && item.Level.Value == 2)
+                                                            {
+                                                                <td class="text-left text-bold">@item.nhiemVuName</td>
+                                                            }
+                                                            else if (item.Level.HasValue && item.Level.Value == 3)
+                                                            {
+                                                                <td class="text-left">@item.nhiemVuName</td>
+                                                            }
+                                                            else if (item.Level.HasValue && item.Level.Value == 4)
+                                                            {
+                                                                <td class="text-left">@item.nhiemVuName</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="text-left">@item.nhiemVuName</td>
+                                                            }
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalDuToanGiao", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalDuToanDuyet", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold"></td>
+                                                            <td class="red text-right text-bold"></td>
+                                                            <td class="red text-right text-bold"></td>
+                                                            <td class="text-left"></td>
+                                                        </tr>
+                                                    }
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            <!--3-->
+                            <div class="col-sm-12">
+                                <div class="row bg-form-table">
+                                    <!--lua-chon-->
+                                    <div class="col-sm-12 button-list">
+                                        <div class="row">
+                                            <div class="col-md-5 text-left">
+                                                <!-- Modal -->
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalTrinhDeCuong" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            @using (Html.BeginForm("TrinhDeCuongDuToan", "Home"))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Trình đề cương dự toán</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form tat-toan form-horizontal form-edit">
+                                                                        <div class="form-body">
+                                                                            <input type="hidden" id="_hiddenFiles" name="_hiddenFiles">
+                                                                            <input type="hidden" id="_hiddenId" name="_hiddenId">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-md-4 label-control">Tệp đính kèm</label>
+                                                                                        <div class="col-md-8">
+                                                                                            <div class="input-group">
+                                                                                                <input type="text" id="_selectFile" name="_selectFile" class="form-control input-sm" placeholder="Nhập tệp..">
+                                                                                                <div class="input-group-append">
+                                                                                                    <button type="button" onclick="AddFile()" class="btn btn-info"><i class="fa fa-plus"></i> Thêm tệp</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-md-4 label-control">Danh sách đã chọn</label>
+                                                                                        <div class="col-md-8" id="_ListFiles">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div class="col-md-6 text-left">
+                                                                        <button type="button" onclick="ShowAddData()" class="btn btn-info"> <i class="fa fa-plus"></i>Thêm mới kho dữ liệu</button>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-right">
+                                                                        <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalPheDuyetDeCuong" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content" id="modelConttentPDDC">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalTKHLCNT" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalPDKHNT" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalPDKQLCNT" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalKyHD" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalGiaiNgan" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalKeThuc" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalXemNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Thông tin nhiệm vụ</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body" id="modalBodyXem">
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalAddData" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        @using (Ajax.BeginForm("ThemMoiDuLieu", "Home", null, new AjaxOptions
+                                                        {
+                                                            HttpMethod = "POST",
+                                                            OnSuccess = "SuccessMessage",
+                                                            OnFailure = "FailMessage",
+                                                            UpdateTargetId = "resultTarget"
+                                                        }, new { enctype = "multipart/form-data" }))
+                                                        {
+                                                            @Html.AntiForgeryToken()
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Thêm kho dữ liệu</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body" style="min-height:350px;">
+
+                                                                    <div class="form tat-toan form-horizontal form-edit">
+                                                                        <div class="form-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group row">
+                                                                                        <label class="col-md-3 label-control">Chọn tệp</label>
+                                                                                        <div class="col-md-9">
+                                                                                            @Html.TextBox("fileAttach", "", new { @type = "file" })
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer text-right">
+                                                                    <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End-lua-chon-->
+                                    </div>
+                                    <!--End-3-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<iframe id="txtArea1" style="display:none"></iframe>
+@section scripts {
+    <script>
+        function ShowAddData() {
+            $("#modalAddData").modal("show");
+        }
+        function SuccessMessage(x) {
+            if (x) {
+                displayMessage("Thêm tệp thành công!", 'success');
+            }
+            else {
+                displayMessage("Tệp tin đã tồn tại!", 'error');
+            }
+            $("#modalAddData").modal("hide");
+        }
+        function SearchNC() {
+            $("#SearchKey").val($("#SearchKeyNC").val());
+            $("#DonViDeXuat").val($("#DonViDeXuatNC").val());
+            $("#TrangThai").val($("#TrangThaiNC").val());
+            $("#quan-ly-nhiem-vu-list").submit();
+        }
+        function Search() {
+            $("#SearchKeyNC").val($("#SearchKey").val());
+            $("#DonViDeXuatNC").val($("#DonViDeXuat").val());
+            $("#TrangThaiNC").val($("#TrangThai").val());
+            $("#quan-ly-nhiem-vu-list").submit();
+        }
+        function xemNhiemVu(x) {
+            $("#modalBodyXem").load("/Home/ChiTietNhiemVu/" + x);
+            setTimeout(function () {
+                $("#modalXemNhiemVu").modal("show");
+            }, 500)
+        }
+        function TrinhDeCuong(x) {
+            $("#_hiddenId").val(x);
+            $("#_selectFile").val("");
+            $("#_hiddenFiles").val("");
+            $("#_ListFiles").html("");
+            $("#modalTrinhDeCuong").modal("show");
+        }
+        function PheDuyetDeCuong(x) {
+            $("#modelConttentPDDC").load("/Home/PheDuyetDeCuong/" + x);
+            setTimeout(function () {
+                $("#modalPheDuyetDeCuong").modal("show");
+            }, 500)
+        }
+        function KeHoachLuaChonNhaThau(x) {
+            $("#modalTKHLCNT .modal-content").load("/Home/TrinhKeHoachLuaChoNhaThau/" + x);
+            $("#modalTKHLCNT").modal("show");
+        }
+        function PheDuyetKeHoachNhaThau(x) {
+            $("#modalPDKHNT .modal-content").load("/Home/PheDuyetKeHoachNhaThau/" + x);
+            setTimeout(function () {
+                $("#modalPDKHNT").modal("show");
+            }, 500)
+        }
+        function AddFile() {
+            var _flie = $("#_selectFile").val();
+            var _ListFile = $("#_hiddenFiles").val();
+            $.ajax({
+                url: "/Home/AddFileToList",
+                type: "GET",
+                dataType: "json",
+                data: { FileName: _flie, ListFile: _ListFile },
+                success: function (data) {
+                    if (data != null) {
+                        $("#_ListFiles").append("<div id=\"item_" + data.taiLieuId + "\">" + data.taiLieuName + "</div>");
+                        $("#_hiddenFiles").val($("#_hiddenFiles").val() + ";" + data.taiLieuName);
+                        $("#_selectFile").val("");
+                    }
+                    else {
+                        $("#_selectFile").val("");
+                    }
+                }
+            })
+        }
+        function PheDuyetKetQuaChonNhaThau(x) {
+            $("#modalPDKQLCNT .modal-content").load("/Home/PheDuyetKetQuaLuaChonNhaThau/" + x);
+            setTimeout(function () {
+                $("#modalPDKQLCNT").modal("show");
+            }, 500)
+        }
+        function KyHopDong(x) {
+            $("#modalKyHD .modal-content").load("/Home/KyHopDong/" + x);
+            setTimeout(function () {
+                $("#modalKyHD").modal("show");
+            }, 500)
+        }
+        function GiaiNgan(x) {
+            $("#modalGiaiNgan .modal-content").load("/Home/GiaiNgan/" + x);
+            $("#modalGiaiNgan").modal("show");
+        }
+        function KetThuc(x) {
+            $("#modalKeThuc .modal-content").load("/Home/KetThuc/" + x);
+            setTimeout(function () {
+                $("#modalKeThuc").modal("show");
+            }, 500)
+        }
+        $(document).ready(function () {
+            $("#_selectFile").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Home/LayTaiLieu",
+                        type: "POST",
+                        dataType: "json",
+                        data: { searchKey: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.taiLieuName, value: item.taiLieuName };
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "",
+                    results: function (count) {
+                        return count + (count > 1 ? ' results' : ' result ') + ' found';
+                    }
+                }
+            });
+        })
+        function Print() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var GiaTriGiao = $('input[name="cbGiaTriGiao"]:checked').length > 0;
+            var GiaTriDuyet = $('input[name="cbGiaTriDuyet"]:checked').length > 0;
+            var TrangThai = $('input[name="cbTrangThai"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute", "top": "-1000000px" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html><head><title>Tổng cục thiên tai</title>');
+            frameDoc.document.write('</head><body>');
+            $.ajax({
+                type: "GET",
+                url: "/Print/PrintNhiemVu2",
+                data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                datatype: "json",
+                success: function (data) {
+                    frameDoc.document.write(data);
+                }
+            });
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 3000);
+        }
+
+        function ExportExcel() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var GiaTriGiao = $('input[name="cbGiaTriGiao"]:checked').length > 0;
+            var GiaTriDuyet = $('input[name="cbGiaTriDuyet"]:checked').length > 0;
+            var TrangThai = $('input[name="cbTrangThai"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                txtArea1.document.open("txt/html", "replace");
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintNhiemVu2",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        txtArea1.document.write(data);
+                    }
+                });
+                txtArea1.document.close();
+                txtArea1.focus();
+                sa = txtArea1.document.execCommand("SaveAs", true, "DanhSachNhiemVu.xls");
+                return (sa);
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintNhiemVu2",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GhiChu: GhiChu, TenNhiemVu: $("#SearchKey").val(), DonViDeXuat: $("#DonViDeXuat").val(), DonViDuToan: $("#DonViDuToan").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        var downloadLink;
+                        var dataType = 'application/vnd.ms-excel';
+                        var filename = "DanhSachNhiemVu.xls";
+                        downloadLink = document.createElement("a");
+                        document.body.appendChild(downloadLink);
+                        downloadLink.href = 'data:' + dataType + ', ' + encodeURIComponent(data);
+                        downloadLink.download = filename;
+                        downloadLink.click();
+                        //sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(data));
+                        //return (sa);
+                    }
+                });
+            }
+        }
+    </script>
+}

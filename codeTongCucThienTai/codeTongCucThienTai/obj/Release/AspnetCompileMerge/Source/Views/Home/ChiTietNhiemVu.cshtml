@@ -1,0 +1,141 @@
+﻿@model codeTongCucThienTai.Models.NhiemVu
+@if (Model != null)
+{
+    <div class="form tat-toan form-horizontal form-edit">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12 mb-1">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td>Danh mục</td>
+                            <td>@Html.Action("LayDanhMucById", "Home", new { Id = Model.danhMucId })</td>
+                        </tr>
+                        @*<tr>
+                                <td>Các nhiệm vụ khác</td>
+                                <td>@Html.Action("NhiemVuLienQuan", "Home", new { nhiemVuId = Model.nhiemVuId, danhMucId = Model.danhMucId })</td>
+                            </tr>*@
+                        <tr>
+                            <td>Tên nhiệm vụ</td>
+                            <td>@Model.nhiemVuName</td>
+                        </tr>
+                        <tr>
+                            <td>Giá trị đề xuất của đơn vị</td>
+                            <td><b class="red">@Model.giaTriDeXuat.ToString("N0")</b> vnđ</td>
+                        </tr>
+                        <tr>
+                            <td>Giá trị đề xuất tổng cục</td>
+                            <td><b class="red">@Model.giaTriDeXuat2.ToString("N0")</b> vnđ</td>
+                        </tr>
+                        @if (Model.trangThai == 0)
+                        {
+                            <tr>
+                                <td>Đơn vị đề xuất</td>
+                                <td> @Model.donViDeXuatName </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Đơn vị thực hiện</td>
+                                <td> @Model.donViDeXuatName </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>Đơn vị dự toán</td>
+                            <td>@Model.donViDutoanName</td>
+                        </tr>
+                        <tr>
+                            <td>Nguồn vốn</td>
+                            <td>@Model.nguonVonName</td>
+                        </tr>
+                        <tr>
+                            <td>Năm kế hoạch</td>
+                            <td>@Model.namKeHoach</td>
+                        </tr>
+                        <tr>
+                            <td>Ghi chú</td>
+                            <td>@Html.Raw(Model.ghiChu)</td>
+                        </tr>
+                        @if (Model.giaTriGiao.HasValue && Model.giaTriGiao > 0)
+                        {
+                            <tr>
+                                <td>Giá trị giao</td>
+                                <td><b class="red">@Model.giaTriGiao.GetValueOrDefault().ToString("N0")</b> vnđ</td>
+                            </tr>
+                        }
+                        @if (Model.giaTriDuyet.HasValue && Model.giaTriDuyet > 0)
+                        {
+                            <tr>
+                                <td>Giá trị duyệt</td>
+                                <td><b class="red">@Model.giaTriDuyet.GetValueOrDefault().ToString("N0")</b> vnđ</td>
+                            </tr>
+                        }
+                        @if (Model.giaTriQuyetToan.HasValue && Model.giaTriQuyetToan > 0)
+                        {
+                            <tr>
+                                <td>Giá trị quyết toán</td>
+                                <td><b class="red">@Model.giaTriQuyetToan.GetValueOrDefault().ToString("N0")</b> vnđ</td>
+                            </tr>
+                        }
+                        @if (Model.giaTriTrungThau.HasValue && Model.giaTriTrungThau > 0)
+                        {
+                            <tr>
+                                <td>Giá trị được duyết</td>
+                                <td><b class="red">@Model.giaTriTrungThau.GetValueOrDefault().ToString("N0")</b> vnđ</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>Nhà thầu trúng</td>
+                            <td>@Html.Action("GetNhaThau", "Home", new { Id = Model.nhiemVuId })</td>
+                        </tr>
+                        <tr>
+                            <td>Trạng thái</td>
+                            @if (Model.trangThai == 0)
+                            {
+                                <td>Mới</td>
+                            }
+                            else if (Model.trangThai == 1)
+                            {
+                                <td>Chưa triển khai</td>
+                            }
+                            else if (Model.trangThai == 2)
+                            {
+                                <td>Đã trình đề cương dự toán</td>
+                            }
+                            else if (Model.trangThai == 3)
+                            {
+                                <td>Đã trình kế hoạch lụa chọn nhà thầu</td>
+                            }
+                            else if (Model.trangThai == 4)
+                            {
+                                <td>Đã được phê duyệt đề cương dự toán</td>
+                            }
+                            else if (Model.trangThai == 5)
+                            {
+                                <td>Đã phê duyệt kế hoạch nhà thầu</td>
+                            }
+                            else if (Model.trangThai == 6)
+                            {
+                                <td>Đã phê duyệt kết quả lựa chọn nhà thầu</td>
+                            }
+                            else if (Model.trangThai == 7)
+                            {
+                                <td>Đã ký hợp đồng</td>
+                            }
+                            else if (Model.trangThai == 8)
+                            {
+                                <td>Đã kết thúc</td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Action("TaiLieuNhiemVu", "Home", new { Id = Model.nhiemVuId })
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

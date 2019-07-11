@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int ipage = 1;
+    if (ViewBag.PageIndex != null)
+    {
+        ipage = (int)ViewBag.PageIndex;
+    }
+    int totalPage = 1;
+    if (ViewBag.TotalPage != null)
+    {
+        totalPage = (int)ViewBag.TotalPage;
+    }
+    int firstPaging = ipage - 2;
+    int lastPaging = ipage + 2;
+    firstPaging = firstPaging <= 0 ? 1 : firstPaging;
+    lastPaging = lastPaging - firstPaging < 5 ? firstPaging + 4 : lastPaging;
+    lastPaging = lastPaging >= totalPage ? totalPage : lastPaging;
+    bool? trash = (bool?)ViewBag.Trash;
+    int count = (ipage - 1) * 20;
+}
+@model List<codeTongCucThienTai.Models.SanPham>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("SanPham","Home")">Sản phẩm</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-header-right col-md-6 col-12 button-page-list money2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("SanPham", "Home", FormMethod.Get, new { @id = "quan-ly-san-pham-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-4">
+                                                    <input type="text" name="NhiemVu" id="NhiemVu" value="@ViewBag.NhiemVu" class="form-control input-sm" placeholder="Tên nhiệm vụ">
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-4">
+                                                    <input type="text" name="SanPham" id="SanPham" value="@ViewBag.SanPham" class="form-control input-sm" placeholder="Tên sản phẩm">
+                                                </div>
+                                                <div class="text-left col-md-3">
+                                                    <button type="submit" class="btn btn-info">Tìm kiếm <i class="la la-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center">STT</th>
+                                                    <th class="text-center">Tên nhiệm vụ</th>
+                                                    <th class="text-center">Sản phẩm</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    count++;
+                                                    <tr>
+                                                        <td>@count</td>
+                                                        <td class="text-left"><a href="#" onclick="xemNhiemVu('@item.nhiemVuId')">@item.nhiemVuName</a></td>
+                                                        <td>@item.sanPhamName</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @if (totalPage > 1)
+                                    {
+                                        <div class="col-md-12 page-item">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination">
+                                                    @if (firstPaging > 1)
+                                                    {
+                                                        <li>
+                                                            <a href="#" aria-label="Previous" onclick="moveToPreviousPage(@ipage, 'quan-ly-san-pham-list')">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    @for (int i = firstPaging; i <= lastPaging; i++)
+                                                    {
+                                                        var cssClass = "";
+                                                        if (i == ipage)
+                                                        {
+                                                            cssClass = "active";
+                                                        }
+                                                        <li class="@cssClass"><a href="#" onclick="moveToPage(@i, 'quan-ly-san-pham-list')">@i</a></li>
+                                                    }
+                                                    @if (lastPaging < totalPage)
+                                                    {
+                                                        <li>
+                                                            <a href="#" aria-label="Next" onclick="moveToNextPage(@ipage, 'quan-ly-san-pham-list')">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </nav>
+                                        </div>
+
+                                    }
+                                    <input type="hidden" name="PageIndex" value="@ipage" class="page-to-move" />
+                                </div>
+                            }
+                            <!--3-->
+                            <div class="col-sm-12">
+                                <div class="row bg-form-table">
+                                    <!--lua-chon-->
+                                    <div class="col-sm-12 button-list">
+                                        <div class="row">
+                                            <div class="col-md-5 text-left">
+                                                <!-- Modal -->
+                                                <div class="modal fade text-left popup-detail" data-backdrop="static" id="modalXemNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-info white">
+                                                                    <h2 class="modal-title white">Thông tin nhiệm vụ</h2>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body" id="modalBodyXem">
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End-lua-chon-->
+                                    </div>
+                                    <!--End-3-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section scripts {
+    <script>
+        function xemNhiemVu(x) {
+            $("#modalBodyXem").load("/Home/ChiTietNhiemVu/" + x);
+            $("#modalXemNhiemVu").modal("show");
+        }
+    </script>
+}

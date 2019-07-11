@@ -1,0 +1,182 @@
+﻿@model codeTongCucThienTai.Models.DuyetNhiemVuModel
+@using (Html.BeginForm("DuyetNhiemVu", "Home"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.isTrash)
+    @Html.HiddenFor(x => x.nhiemVuId)
+    <div class="form tat-toan form-horizontal form-edit">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12 mb-1">
+                    <h3>Thông tin nhiệm vụ</h3>
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td>Tên nhiệm vụ</td>
+                            <td>@Model.nhiemVuName</td>
+                        </tr>
+                        <tr>
+                            <td>Danh mục</td>
+                            <td>@Model.danhMucName</td>
+                        </tr>
+                        <tr>
+                            <td>Giá trị đề xuất</td>
+                            <td><b class="red">@Model.giaTriDeXuat.ToString("N0")</b> vnđ</td>
+                        </tr>
+                        <tr>
+                            <td>Đơn vị đề xuất</td>
+                            <td> @Model.donViDeXuatName </td>
+                        </tr>
+                        <tr>
+                            <td>Đơn vị dự toán</td>
+                            <td>@Model.donViDutoanName</td>
+                        </tr>
+                        <tr>
+                            <td>Nguồn vốn</td>
+                            <td>@Model.nguonVonName</td>
+                        </tr>
+                        <tr>
+                            <td>Năm kế hoạch</td>
+                            <td>@Model.namKeHoach</td>
+                        </tr>
+                        <tr>
+                            <td>Ghi chú</td>
+                            <td>@Html.Raw(Model.ghiChu)</td>
+                        </tr>
+                        <tr>
+                            <td>Giá trị giao</td>
+                            <td>
+                                @Html.TextBoxFor(x => x.giaTriGiao, new { @class = "form-control input-sm", @placeholder = "Nhập giá trị..", @onkeyup = "formatCurrencyNo('giaTriGiao')" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hạn trình</td>
+                            <td>
+                                @Html.TextBoxFor(x => x.hanTrinh, new { @class = "form-control input-sm", @placeholder = "Nhập hạn trình.." })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tệp đính kèm</td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="hidden" id="_hiddenFlieD" name="_hiddenFlieD">
+                                    @Html.TextBoxFor(x => x.fileAttachment, new { @class = "form-control input-sm", @placeholder = "Nhập tệp.." })
+                                    <div class="input-group-append">
+                                        <button type="button" onclick="AddFileD()" class="btn btn-info"><i class="fa fa-plus"></i> Thêm tệp</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="_viewFile">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <div class="col-md-6 text-left">
+                            <button type="button" onclick="ShowAddData()" class="btn btn-info"> <i class="fa fa-plus"></i>Thêm mới kho dữ liệu</button>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+        $.datepicker.regional["vi"] =
+            {
+                closeText: "Đóng",
+                prevText: "Trước",
+                nextText: "Sau",
+                currentText: "Hôm nay",
+                monthNames: ["Tháng một", "Tháng hai", "Tháng ba", "Tháng tư", "Tháng năm", "Tháng sáu", "Tháng bảy", "Tháng tám", "Tháng chín", "Tháng mười", "Tháng mười một", "Tháng mười hai"],
+                monthNamesShort: ["Một", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười", "Mười một", "Mười hai"],
+                dayNames: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"],
+                dayNamesShort: ["CN", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy"],
+                dayNamesMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+                weekHeader: "Tuần",
+                dateFormat: "dd/mm/yy",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ""
+            };
+        $.datepicker.setDefaults($.datepicker.regional["vi"]);
+        $("#hanTrinh").datepicker();
+    });
+    $(document).ready(function () {
+        $("#fileAttachment").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/LayTaiLieu",
+                    type: "POST",
+                    dataType: "json",
+                    data: { searchKey: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.taiLieuName, value: item.taiLieuName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "",
+                results: function (count) {
+                    return count + (count > 1 ? ' results' : ' result ') + ' found';
+                }
+            }
+        });
+    })
+    function formatCurrencyNo(txt) {
+        var num = document.getElementById(txt).value;
+        num = num.toString().replace(/\$|\,/g, '');
+        if (isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num * 100 + 0.50000000001);
+        cents = num % 100;
+        num = Math.floor(num / 100).toString();
+        if (cents < 10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+                num.substring(num.length - (4 * i + 3));
+        if (sign && num != "0") {
+            document.getElementById(txt).value = (((sign) ? '' : '-') + num);
+        }
+        else {
+            document.getElementById(txt).value = null;
+        }
+    }
+    function AddFileD() {
+        var _flie = $("#fileAttachment").val();
+        var _ListFile = $("#_hiddenFlieD").val();
+        $.ajax({
+            url: "/Home/AddFileToList",
+            type: "GET",
+            dataType: "json",
+            data: { FileName: _flie, ListFile: _ListFile },
+            success: function (data) {
+                if (data != null) {
+                    $("#_viewFile").append("<div id=\"item_" + data.taiLieuId + "\">" + data.taiLieuName + "</div>");
+                    $("#_hiddenFlieD").val($("#_hiddenFlieD").val() + ";" + data.taiLieuName);
+                    $("#fileAttachment").val("");
+                }
+                else {
+                    $("#fileAttachment").val("");
+                }
+            }
+        })
+    }
+</script>

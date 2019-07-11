@@ -1,0 +1,8 @@
+﻿1. Quỹ tiền mặt - Thay đổi tên kiểu vay - Thời gian thực hiện 1 ngày : 03/12/2018
+http://192.168.1.27:9090/redmine/issues/3798
+2. Giao dịch trong ngày- Thay đổi tên kiểu vay - Thời gian thực hiện 1 ngày : 03/12/2018
+http://192.168.1.27:9090/redmine/issues/3808
+3. Nợ phải thu- thay đổi tên kiểu vay - Thời gian thực hiện 1 ngày : 03/12/2018
+http://192.168.1.27:9090/redmine/issues/3810
+4. Nợ phải thu- đóng lãi- đổi kì thanh toán - Thời gian thực hiện 1 ngày : 03/12/2018
+http://192.168.1.27:9090/redmine/issues/3812

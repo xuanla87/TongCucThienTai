@@ -1,0 +1,44 @@
+﻿@model codeTongCucThienTai.Models.ChangePass
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.UserId)
+    <div class="modal-header bg-info white">
+        <h2 class="modal-title white">Đổi mật khẩu</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="la la-close"></i></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form tat-toan form-horizontal form-edit">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-md-3 label-control">Họ và tên</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control input-sm", @Readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 label-control">Tài khoản</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control input-sm", @Readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 label-control">Mật khẩu mới</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.PasswordNew, new { @class = "form-control input-sm", @placeholder = "Nhập mật khẩu..", @type= "password" })
+                                @Html.ValidationMessageFor(x => x.PasswordNew, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer text-right">
+        <button type="submit" class="btn btn-info">Lưu dữ liệu</button>
+    </div>
+}

@@ -1,0 +1,374 @@
+﻿@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+@model IEnumerable<codeTongCucThienTai.Models.NhiemVuView>
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("ThongKe","Home")">Thống kê - báo cáo</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-header-right col-md-6 col-12 button-page-list money2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("ThongKe", "Home", FormMethod.Get, new { @id = "thong-ke-nhiem-vu-list" }))
+                            {
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-3">
+                                                    @Html.DropDownList("DonViThucHien", new SelectList(ViewBag.DonViThucHien, "Value", "Text"), "-- Đơn vị thực hiện --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-2">
+                                                    @Html.DropDownList("NamKeHoach", new SelectList(ViewBag.NamKeHoach, "Value", "Text"), "-- Năm kế hoạch --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-2">
+                                                    @Html.DropDownList("NguonVon", new SelectList(ViewBag.NguonVon, "Value", "Text"), "-- Nguồn vốn --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-3">
+                                                    @Html.DropDownList("DanhMucNhiemVu", new SelectList(ViewBag.DanhMucNhiemVu, "Value", "Text"), "-- Danh mục nhiệm vụ --", new { @class = "form-control input-sm" })
+                                                </div>
+                                                <div class="form-group mb-1 col-sm-12 col-md-2 date-npt mad-col">
+                                                    <div class="row">
+                                                        <div class="text-left col-md-5 pad-search mad-col button-search-1">
+                                                            <button type="submit" class="btn btn-info">Lọc <i class="la la-search"></i></button>
+                                                        </div>
+                                                        <div class="col-md-5 pad-search mad-col text-right">
+                                                            <span class=" print-dsnpt ">
+                                                                <button type="button" onclick="Print()" class="btn btn-info" data-toggle="popover" data-placement="top" data-content="In" data-original-title="" title=""><i class="la la-print"></i></button>
+                                                                <button type="button" onclick="ExportExcel()" class="btn btn-info" data-toggle="popover" data-placement="top" data-content="Xuất Excel" data-original-title="" title=""><i class="la la-level-up"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Left808x200 mt-1">
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table1 table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center"><input id="cbSTT" name="cbSTT" checked type="checkbox" /><br />STT <div style="min-height:23px"></div></th>
+                                                    <th class="text-center" width="220"><input id="cbName" name="cbName" checked type="checkbox" /><br />Tên nhiệm vụ <div style="min-height:23px"></div></th>
+                                                    <th class="text-center"><input id="cbDVDeXuat" checked name="cbDVDeXuat" type="checkbox" /><br />Đơn vị thực hiện <div style="min-height:23px"></div></th>
+                                                    <th class="text-center">
+                                                        <input id="cbNguonVon" name="cbNguonVon" checked type="checkbox" /><br /> Nguồn vốn <div style="min-height:23px"></div>
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriGiao" checked name="cbGiaTriGiao" type="checkbox" /><br />Dự toán giao
+                                                        <div class="text-right red">
+                                                            @ViewBag.TotalGiao
+                                                        </div>
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        <input id="cbGiaTriDuyet" checked name="cbGiaTriDuyet" type="checkbox" /><br />Dự toán được duyệt
+                                                        <div class="text-right red">
+                                                            @ViewBag.TotalDuyet
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <input id="cbTrangThai" name="cbTrangThai" checked type="checkbox" /><br />Trạng thái <div style="min-height:23px"></div>
+                                                    </th>
+                                                    <th>
+                                                        <input id="cbGiaTriHopDong" name="cbGiaTriHopDong" checked type="checkbox" /><br />Giá trị hợp đồng
+                                                        <div class="text-right red">
+                                                            @ViewBag.TotalHopDong
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <input id="cbGiaTriGiaiNgan" name="cbGiaTriGiaiNgan" checked type="checkbox" /><br />Giá trị giải ngân
+                                                        <div class="text-right red">
+                                                            @ViewBag.TotalGiaiNgan
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <input id="cbGiaTriQuyetToan" name="cbGiaTriQuyetToan" checked type="checkbox" /><br />Giá trị quyết toán
+                                                        <div class="text-right red">
+                                                            @ViewBag.TotalQuyetToan
+                                                        </div>
+                                                    <th class="text-center" width="320">
+                                                        <input id="cbGhiChu" name="cbGhiChu" checked type="checkbox" /><br />Ghi chú <div style="min-height:23px"></div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    if (item.nhiemVuId > 0)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@item.STT</td>
+                                                            <td class="text-left"><a href="#" onclick="xemNhiemVu('@item.nhiemVuId')">@item.nhiemVuName</a></td>
+                                                            <td class="text-left">@item.donViDeXuatName</td>
+                                                            <td class="text-left">@item.nguonVonName</td>
+                                                            @if (item.giaTriGiao.HasValue && item.giaTriGiao > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriGiao.GetValueOrDefault().ToString("N0")</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold">0</td>
+                                                            }
+                                                            @if (item.giaTriTrungThau.HasValue && item.giaTriTrungThau > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriTrungThau.GetValueOrDefault().ToString("N0")</td>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold">0</td>
+                                                            }
+                                                            @if (item.trangThai == 1)
+                                                            {
+                                                                <td class="text-left">Chưa triển khai</td>
+                                                            }
+                                                            else if (item.trangThai == 2)
+                                                            {
+                                                                <td class="text-left">Đã trình đề cương dự toán</td>
+                                                            }
+                                                            else if (item.trangThai == 3)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt đề cương dự toán</td>
+                                                            }
+                                                            else if (item.trangThai == 4)
+                                                            {
+                                                                <td class="text-left">Đã trình kế hoạch lựa chọn nhà thầu</td>
+                                                            }
+                                                            else if (item.trangThai == 5)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt kế hoạch nhà thầu</td>
+                                                            }
+                                                            else if (item.trangThai == 6)
+                                                            {
+                                                                <td class="text-left">Đã phê duyệt kết quả lựa chọn nhà thầu</td>
+                                                            }
+                                                            else if (item.trangThai == 7)
+                                                            {
+                                                                <td class="text-left">Đã ký hợp đồng</td>
+                                                            }
+                                                            else if (item.trangThai == 8)
+                                                            {
+                                                                <td class="text-left">Đã kết thúc</td>
+                                                            }
+                                                            @if (item.giaTriHopDong.HasValue && item.giaTriHopDong > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriHopDong.GetValueOrDefault().ToString("N0")</td>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold">0</td>
+                                                            }
+                                                            <td class="red text-right text-bold"><a class="red" href="javascript:ShowGiaiNgan('@item.nhiemVuId');">@Html.Action("GetGiaiNgan", "Print", new { Id = item.nhiemVuId })</a> </td>
+                                                            @if (item.giaTriQuyetToan.HasValue && item.giaTriQuyetToan > 0)
+                                                            {
+                                                                <td class="red text-right text-bold">@item.giaTriQuyetToan.GetValueOrDefault().ToString("N0")</td>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="red text-right text-bold">0</td>
+                                                            }
+                                                            <td class="text-left">@item.ghiChu </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@item.STT</td>
+                                                            <td class="text-left">@item.nhiemVuName</td>
+                                                            <td class="text-left"></td>
+                                                            <td class="text-left"></td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalDuToanGiao", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalDuToanDuyet", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold"></td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalHopDong", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalGiaiNgan", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="red text-right text-bold">@Html.Action("_TotalQuyetToan", "Home", new { Data = Model.ToList(), Id = item.danhMucId })</td>
+                                                            <td class="text-left"></td>
+                                                        </tr>
+                                                    }
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade text-left popup-detail" data-backdrop="static" id="modalXemNhiemVu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info white">
+                    <h2 class="modal-title white">Thông tin nhiệm vụ</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBodyXem">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-left popup-detail" data-backdrop="static" id="modalXemGiaiNgan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info white">
+                    <h2 class="modal-title white">Chi tiết giải ngân</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Test"></div>
+<iframe id="txtArea1" style="display:none"></iframe>
+@section scripts {
+    <script>
+        function ShowGiaiNgan(x) {
+            $("#modalXemGiaiNgan .modal-content .modal-body").load("/Print/ChiTietGiaiNgan/" + x);
+            setTimeout(function () {
+                $("#modalXemGiaiNgan").modal("show");
+            }, 500)
+
+        }
+        function xemNhiemVu(x) {
+            $("#modalBodyXem").load("/Home/ChiTietNhiemVu/" + x);
+            setTimeout(function () {
+                $("#modalXemNhiemVu").modal("show");
+            }, 500)
+        }
+        function Print() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var GiaTriGiao = $('input[name="cbGiaTriGiao"]:checked').length > 0;
+            var GiaTriDuyet = $('input[name="cbGiaTriDuyet"]:checked').length > 0;
+            var TrangThai = $('input[name="cbTrangThai"]:checked').length > 0;
+            var GiaTriHopDong = $('input[name="cbGiaTriHopDong"]:checked').length > 0;
+            var GiaTriGiaiNgan = $('input[name="cbGiaTriGiaiNgan"]:checked').length > 0;
+            var GiaTriQuyetToan = $('input[name="cbGiaTriQuyetToan"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute", "top": "-1000000px" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html><head><title>Tổng cục thiên tai</title>');
+            frameDoc.document.write('</head><body>');
+            $.ajax({
+                type: "GET",
+                url: "/Print/PrintThongKe2",
+                data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GiaTriGiaiNgan: GiaTriGiaiNgan, _GiaTriQuyetToan: GiaTriQuyetToan, _GiaTriHopDong: GiaTriHopDong, _GhiChu: GhiChu, DonViThucHien: $("#DonViThucHien").val(), DanhMucNhiemVu: $("#DanhMucNhiemVu").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                datatype: "json",
+                success: function (data) {
+                    frameDoc.document.write(data);
+                }
+            });
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 3000);
+        }
+
+        function ExportExcel() {
+            var No = $('input[name="cbSTT"]:checked').length > 0;
+            var Name = $('input[name="cbName"]:checked').length > 0;
+            var NguonVon = $('input[name="cbNguonVon"]:checked').length > 0;
+            var DVDeXuat = $('input[name="cbDVDeXuat"]:checked').length > 0;
+            var GiaTriGiao = $('input[name="cbGiaTriGiao"]:checked').length > 0;
+            var GiaTriDuyet = $('input[name="cbGiaTriDuyet"]:checked').length > 0;
+            var TrangThai = $('input[name="cbTrangThai"]:checked').length > 0;
+            var GiaTriHopDong = $('input[name="cbGiaTriHopDong"]:checked').length > 0;
+            var GiaTriGiaiNgan = $('input[name="cbGiaTriGiaiNgan"]:checked').length > 0;
+            var GiaTriQuyetToan = $('input[name="cbGiaTriQuyetToan"]:checked').length > 0;
+            var GhiChu = $('input[name="cbGhiChu"]:checked').length > 0;
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                txtArea1.document.open("txt/html", "replace");
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintThongKe2",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GiaTriGiaiNgan: GiaTriGiaiNgan, _GiaTriQuyetToan: GiaTriQuyetToan, _GiaTriHopDong: GiaTriHopDong, _GhiChu: GhiChu, DonViThucHien: $("#DonViThucHien").val(), DanhMucNhiemVu: $("#DanhMucNhiemVu").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        txtArea1.document.write(data);
+                    }
+                });
+                txtArea1.document.close();
+                txtArea1.focus();
+                sa = txtArea1.document.execCommand("SaveAs", true, "BaoCaoNam.xls");
+                return (sa);
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "/Print/PrintThongKe2",
+                    data: { _No: No, _Name: Name, _NguonVon: NguonVon, _DonViDeXuat: DVDeXuat, _GiaTriGiao: GiaTriGiao, _GiaTriDuyet: GiaTriDuyet, _TrangThai: TrangThai, _GiaTriGiaiNgan: GiaTriGiaiNgan, _GiaTriQuyetToan: GiaTriQuyetToan, _GiaTriHopDong: GiaTriHopDong, _GhiChu: GhiChu, DonViThucHien: $("#DonViThucHien").val(), DanhMucNhiemVu: $("#DanhMucNhiemVu").val(), NguonVon: $("#NguonVon").val(), NamKeHoach: $("#NamKeHoach").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        var downloadLink;
+                        var dataType = 'application/vnd.ms-excel';
+                        var filename = "BaoCaoNam.xls";
+                        downloadLink = document.createElement("a");
+                        document.body.appendChild(downloadLink);
+                        downloadLink.href = 'data:' + dataType + ', ' + encodeURIComponent(data);
+                        downloadLink.download = filename;
+                        downloadLink.click();
+                    }
+                });
+            }
+        }
+    </script>
+}

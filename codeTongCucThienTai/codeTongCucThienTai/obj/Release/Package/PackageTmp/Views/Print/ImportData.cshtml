@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Import kế hoạch nhiệm vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<codeTongCucThienTai.Models.NhiemVu> _listSuccess = (List<codeTongCucThienTai.Models.NhiemVu>)ViewBag.ListSuccess;
+    List<codeTongCucThienTai.Models.NhiemVuModel> _listError = (List<codeTongCucThienTai.Models.NhiemVuModel>)ViewBag.ListError;
+    int Count = 0;
+    int Count2 = 0;
+}
+<div class="content-header row">
+</div>
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="content-header-right col-md-6 col-12">
+                                <div class="row breadcrumbs-top">
+                                    <div class="breadcrumb-wrapper col-12">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="/"><i class="la la-home"></i> Trang chủ</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="@Url.Action("ImportData","Print")">Import kế hoạch nhiệm vụ</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-header-right col-md-6 col-12 button-page-list money2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            @using (Html.BeginForm("ImportData", "Print", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="repeater-default">
+                                    <div data-repeater-list="car">
+                                        <div data-repeater-item class="col-sm-12">
+                                            <div class="form row bg-search-form">
+                                                <div class="form-group col-sm-12 col-md-5">
+                                                    <input type="file" id="fileAttach" name="fileAttach" placeholder="Chọn file...">
+                                                </div>
+                                                <div class="form-group col-sm-12 col-md-3">
+                                                    <button type="submit" class="btn btn-info"><i class="fa fa-upload"></i> Import</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (_listSuccess != null && _listSuccess.Count > 0)
+                            {
+                                <div class="Left808x200 mt-1">
+                                    Danh sách dữ liệu import thành công
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center">STT</th>
+                                                    <th class="text-center">Tên nhiệm vụ</th>
+                                                    <th class="text-center">Danh mục nhiệm vụ</th>
+                                                    <th class="text-center">
+                                                        Nguồn vốn
+                                                    </th>
+                                                    <th class="text-center">Đơn vị đề xuất</th>
+                                                    <th class="text-center">Đơn vị dự toán</th>
+                                                    <th class="w-stt text-center">Năm kế hoạch</th>
+                                                    <th class="w-stt text-center">
+                                                        Giá trị đề xuất của đơn vị
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        Giá trị đề xuất của tổng cục
+                                                    </th>
+                                                    <th class="text-center" width="220">
+                                                        Ghi chú
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in _listSuccess)
+                                                {
+                                                    Count++;
+                                                <tr class="">
+                                                    <td>@Count</td>
+                                                    <td class="text-left">@item.nhiemVuName</td>
+                                                    <td class="text-left">@Html.Action("LayDanhMucById", "Home", new { Id = item.danhMucId })</td>
+                                                    <td>@item.nguonVonName</td>
+                                                    <td>@item.donViDeXuatName</td>
+                                                    <td>@item.donViDutoanName</td>
+                                                    <td>@item.namKeHoach</td>
+                                                    <td class="red text-right text-bold">@item.giaTriDeXuat.ToString("N0")</td>
+                                                    <td class="red text-right text-bold">@item.giaTriDeXuat2.ToString("N0")</td>
+                                                    <td class="text-left">@item.ghiChu </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            @if (_listError != null && _listError.Count > 0)
+                            {
+                                <div class="Left808x200 mt-1">
+                                    Danh sách dữ liệu import không thành công
+                                    <div class="table-responsive table-1 tableFixHead">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-stt text-center">STT</th>
+                                                    <th class="text-center">Tên nhiệm vụ</th>
+                                                    <th class="text-center">Danh mục nhiệm vụ</th>
+                                                    <th class="text-center">
+                                                        Nguồn vốn
+                                                    </th>
+                                                    <th class="text-center">Đơn vị đề xuất</th>
+                                                    <th class="text-center">Đơn vị dự toán</th>
+                                                    <th class="w-stt text-center">Năm kế hoạch</th>
+                                                    <th class="w-stt text-center">
+                                                        Giá trị đề xuất của đơn vị
+                                                    </th>
+                                                    <th class="w-stt text-center">
+                                                        Giá trị đề xuất của tổng cục
+                                                    </th>
+                                                    <th class="text-center" width="220">
+                                                        Ghi chú
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in _listError)
+                                                {
+                                                    Count2++;
+                                                <tr class="">
+                                                    <td>@Count2</td>
+                                                    <td class="text-left">@item.nhiemVuName</td>
+                                                    <td class="text-left">@item.danhMucName</td>
+                                                    <td>@item.nguonVonName</td>
+                                                    <td>@item.donViDeXuatName</td>
+                                                    <td>@item.donViDutoanName</td>
+                                                    <td>@item.namKeHoach</td>
+                                                    <td class="red text-right text-bold">@item.giaTriDeXuat</td>
+                                                    <td class="red text-right text-bold">@item.giaTriDeXuat2</td>
+                                                    <td class="text-left">@item.ghiChu </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            <div class="Left808x200 mt-1">
+                                <a href="@Url.Action("KeHoachNhiemVu3","Home")" class="btn btn-info"><i class="fa fa-undo"></i> Quay lại kế hoạch nhiệm vụ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

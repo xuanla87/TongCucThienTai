@@ -1,0 +1,117 @@
+﻿@model codeTongCucThienTai.Models.NhiemVuModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.isTrash)
+    @Html.HiddenFor(x => x.trangThai)
+    @Html.HiddenFor(x => x.updateTime)
+    @Html.HiddenFor(x => x.createTime)
+    @Html.HiddenFor(x => x.userCreate)
+    @Html.HiddenFor(x => x.userUpdate)
+    @Html.HiddenFor(x => x.nhiemVuId)
+    @Html.HiddenFor(x => x.nguonVonName)
+    @Html.HiddenFor(x => x.donViDeXuatName)
+    @Html.HiddenFor(x => x.donViDutoanName)
+    <div class="form tat-toan form-horizontal form-edit">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">
+                            Danh mục nhiệm vụ
+                        </label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.danhMucId, null, new { @class = "form-control input-sm" })
+                        </div>
+                        <label class="col-md-2 label-control">
+                            Năm kế hoạch
+                        </label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.namKeHoach, null, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">Tên nhiệm vụ</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(x => x.nhiemVuName, new { @class = "form-control input-sm", @placeholder = "Nhập tên nhiệm vụ.." })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">
+                            Giá trị đề xuất của đơn vị
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.giaTriDeXuat, new { @class = "form-control input-sm number", @placeholder = "Nhập giá trị đề xuất..", @onkeyup = "formatCurrencyNo('giaTriDeXuat')" })
+                        </div>
+                        <label class="col-md-2 label-control">
+                            Giá trị đề xuất tổng cục
+                        </label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.giaTriDeXuat2, new { @class = "form-control input-sm number", @placeholder = "Nhập giá trị đề xuất..", @onkeyup = "formatCurrencyNo('giaTriDeXuat2')" })
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">
+                            Đơn vị đề xuất
+                        </label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.donViDeXuatId, null, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">
+                            Đơn vị dự toán
+                        </label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.donViDuToanId, null, new { @class = "form-control input-sm" })
+                        </div>
+                        <label class="col-md-2 label-control">Nguồn vốn</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.nguonVonName2, (IEnumerable<SelectListItem>)ViewBag.nguonVonName, new { @class = "form-control input-sm multiple-select", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 label-control">Ghi chú</label>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(x => x.ghiChu, new { @class = "form-control input-sm", @placeholder = "Ghi chú..", @rows = "2" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Lưu dữ liệu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $('.multiple-select').select2();
+    });
+    function formatCurrencyNo(txt) {
+        var num = document.getElementById(txt).value;
+        num = num.toString().replace(/\$|\,/g, '');
+        if (isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num * 100 + 0.50000000001);
+        cents = num % 100;
+        num = Math.floor(num / 100).toString();
+        if (cents < 10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+                num.substring(num.length - (4 * i + 3));
+        if (sign && num != "0") {
+            document.getElementById(txt).value = (((sign) ? '' : '-') + num);
+        }
+        else {
+            document.getElementById(txt).value = null;
+        }
+    }
+</script>
